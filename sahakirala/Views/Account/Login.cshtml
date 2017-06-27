@@ -1,0 +1,87 @@
+﻿@model Database.USER
+@{
+    Layout = "";
+    ViewBag.Title = "Login";
+}
+<html class="no-js">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="fresh Gray Bootstrap 3.0 Responsive Theme ">
+    <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap,Bootstrap 3.0 Responsive Login">
+    <meta name="author" content="Adsays">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>SportsSide - Kullanıcı Girişi</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/demo.css" rel="stylesheet" />
+    <link rel="stylesheet" id="fordemo" href="~/css/login-theme-10.css" type="text/css">
+    <link href="~/css/animate-custom.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</head>
+<body class="fade-in">
+    <!-- start Login box -->
+    <div class="container" id="login-block">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+
+                <div class="login-box clearfix animated flipInY">
+                    <div class="page-icon animated bounceInDown">
+                        <img src="~/img/user-icon.png" alt="Key icon">
+                    </div>
+                    <div class="login-logo">
+                        <div class="row">
+                            <a href="http://localhost:30471/"><img src="~/img/accountLogo.png" alt="Company Logo"></a>
+                        </div>
+                        
+                        <div class="row">
+                            <span style="font-size:26px;">SportsSide</span>
+                        </div>
+                        
+                    </div>
+                    <hr>
+                    @if ((string)TempData["Message"] != "Basarili" && TempData["Message"] != null)
+                    {
+                        <div class="alert alert-danger">
+                            @TempData["Message"].ToString()
+                        </div>
+                    }
+                        <div class="login-form">
+                            <!-- Start Error box -->
+                            <div class="alert alert-danger hide">
+                                <button type="button" class="close" data-dismiss="alert"> ×</button>
+                                <h4>Error!</h4>
+                                Your Error Message goes here
+                            </div> <!-- End Error box -->
+                            <form action="@Url.Content("/Account/Login")" method="post">
+                                <input type="text" placeholder="Kullanıcı Adı" class="input-field" name="username" id="username" required="">
+                                @Html.ValidationMessageFor(model => model.USER_NAME, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                <input type="password" placeholder="Şifre" class="input-field" name="password" id="password" required="">
+                                @Html.ValidationMessageFor(model => model.USER_PASSWORD, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                <button type="submit" class="btn btn-login">Giriş Yap</button>
+                            </form>
+                            <div class="login-links">
+                                <a href="/Account/Forgot_Password">
+                                    Şifrenizi mi Unuttunuz?
+                                </a>
+                                <br>
+                                <a href="/Account/Register">
+                                    Hesabınız yok mu? <strong>Kayıt Ol</strong>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </body>
+</html>
+

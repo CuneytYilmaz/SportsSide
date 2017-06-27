@@ -1,0 +1,76 @@
+﻿@model PagedList.IPagedList<SportsSide.DAL.DISTRICT>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>İlçeler</h2>
+
+<p>
+    <input type="button" value="Yeni Oluştur" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Districts")'" />
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        İlçeler
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        İlçe Adı
+                    </th>
+                    <th>
+                        Posta Kodu
+                    </th>
+                    <th>
+                        İl Adı
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT_ZIP_CODE)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CITY.CITY_NAME)
+                        </td>
+                        <td>
+                            <input type="button" value="Düzenle" class="btn btn-info btn-sm" onclick="location.href='@Url.Action("Edit", "Districts", new { id = item.DISTRICT_ID})'" />
+                            <input type="button" value="Detaylar" class="btn btn-warning btn-sm" onclick="location.href='@Url.Action("Details", "Districts", new { id = item.DISTRICT_ID})'" />
+                            <input type="button" value="Sil" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Delete", "Districts", new { id = item.DISTRICT_ID})'" />
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="next">
+
+                    @*Sayfalandırma kodu*@
+                    <br /> Sayfa @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

@@ -1,0 +1,119 @@
+﻿@model PagedList.IPagedList<SportsSide.DAL.FACILITY>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="overlay"></div>
+<div id="frame">
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators" id="sliderList"></ol>
+
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner" id="sliderContainer">
+        </div>
+
+        <!-- Controls -->
+        <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+    </div>
+</div>
+
+<h2>Tesisler</h2>
+
+<p>
+    <input type="button" value="Yeni Oluştur" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Facilities")'" />
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Tesisler
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Tesis Adı
+                    </th>
+                    <th>
+                        Tesis Türü
+                    </th>
+                    <th>
+                        Tesis Adresi
+                    </th>
+                    <th>
+                        Tesis Fotoğrafı
+                    </th>
+                    <th>
+                        İlçe
+                    </th>
+                    <th>
+                        İl
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_TYPE1.FT_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_ADDRESS)
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning btn-sm" id="@item.FACILITY_ID" value="@item.FACILITY_NAME">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Görüntüle
+                            </button>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT.DISTRICT_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT.CITY.CITY_NAME)
+                        </td>
+                        <td>
+                            <div class="hideextra">
+                                <input type="button" value="Düzenle" class="btn btn-info btn-sm" onclick="location.href='@Url.Action("Edit", "Facilities", new { id = item.FACILITY_ID})'" />
+                                <input type="button" value="Detaylar" class="btn btn-warning btn-sm" onclick="location.href='@Url.Action("Details", "Facilities", new { id = item.FACILITY_ID})'" />
+                                <input type="button" value="Sil" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Delete", "Facilities", new { id = item.FACILITY_ID})'" />
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="next" id="displayPager">
+
+                    @*Sayfalandırma kodu*@
+                    <br /> Sayfa @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/facility.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

@@ -1,0 +1,71 @@
+﻿@model SportsSide.DAL.DISTRICT
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>İlçe Oluştur</h2>
+
+@using (Html.BeginForm("Create", "Districts", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+            </div>
+        }
+        <div class="form-group">
+            @Html.Label("Bölge Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ddlAreas", ViewBag.Areas as SelectList, "Seçiniz", new { @class = "form-control", @id = "ddlAreas" })
+                @Html.ValidationMessageFor(model => model.CITY.AREA.AREA_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Şehir Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.DropDownList("code", Enumerable.Empty<SelectListItem>())*@
+                @Html.DropDownListFor(model => model.CITY_ID, Enumerable.Empty<SelectListItem>(), "Bölge Seçiniz", new { @class = "form-control", @id = "ddlCities"})
+                @Html.ValidationMessageFor(model => model.CITY_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("İlçe Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DISTRICT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "İlçe adı giriniz" } })
+                @Html.ValidationMessageFor(model => model.DISTRICT_NAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Posta Kodu :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DISTRICT_ZIP_CODE, new { htmlAttributes = new { @class = "form-control", placeholder = "Posta kodu giriniz" } })
+                @Html.ValidationMessageFor(model => model.DISTRICT_ZIP_CODE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Districts")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/district.js"></script>
+<script src="~/js/layout.js"></script>

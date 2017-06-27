@@ -1,0 +1,377 @@
+﻿@model IEnumerable<Database.FACILITY>
+@{
+    ViewBag.Title = "Index";
+}
+<div id="content-wrapper">
+
+    <div class="blocks-container">
+
+        <!-- BLOCK "TYPE 1" -->
+        <div class="block type-1 scroll-to-block" data-id="home">
+            <div class="clip">
+                <video loop="" autoplay="" poster="assets/saha.jpg" class="bgvid"></video>
+                <!-- <div class="bg-span"></div> -->
+            </div>
+            <div class="container type-1-text wow flipInX animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: flipInX;">
+                <div class="row">
+                    <div class="col-md-8 col-md-offset-2 type-1-center" style="margin-top:20px">
+                        <article class="big white table">
+                            <img class="image-block" src="~/img/pin.png" alt="">
+                            <div id="myCarousel" class="carousel slide" data-ride="carousel">
+                                <ol class="carousel-indicators">
+                                    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+                                    <li data-target="#myCarousel" data-slide-to="1"></li>
+                                    <li data-target="#myCarousel" data-slide-to="2"></li>
+                                    <li data-target="#myCarousel" data-slide-to="3"></li>
+                                </ol>
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item active">
+                                        <h2 class="h2" style="color:azure" id="h0"></h2>
+
+                                        <p id="p0"></p>
+                                    </div>
+                                    <div class="item">
+                                        <h2 class="h2" style="color:azure" id="h1"></h2>
+                                        <p id="p1"></p>
+                                    </div>
+                                    <div class="item">
+
+                                        <h2 class="h2" style="color:azure" id="h2"></h2>
+
+                                        <p id="p2"></p>
+                                    </div>
+                                    <div class="item">
+                                        <h2 class="h2" style="color:azure" id="h3"></h2>
+
+                                        <p id="p3"></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <br />
+                            <p>Saha bulman 10 sn , Kiralaman 30 sn sürecek :)</p>
+
+                            <a href="/Account/Login" class="button"><span>HEMEN REZERVASYON YAP</span></a>
+
+
+
+                        </article>
+                    </div>
+                </div>
+            </div>
+            <div class="mouse-icon"></div>
+        </div>
+        <!-- BLOCK "TYPE 1" -->
+        <!-- BLOCK "TYPE 2" -->
+        <div class="block type-2 scroll-to-block" data-id="about">
+            <div class="container-fluid type-2-text">
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-1 col-sm-12 col-sm-offset-0 wow fadeInLeft animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                        <article class="normall">
+                            <h2 class="h2 titel-left">30 SANİYEDE SAHA KİRALA!</h2>
+                            <p>Sen de arkadaşlarınla futbol, basketbol, tenis oynamak veya yüzmek istediğin spor tesisini bulmakta zorlanıyorsun değil mi? İstediğin saatte, istediğin semtte ve istediğin fiyatta spor tesisini bulmak tam bir işkence. Onlarca telefon görüşmesi yapmak zorundasın. Spor tesisine gittiğinde nerede ve nasıl bir yerle kaşılacağın ise tam bir muamma.</p>
+                            <p>Bunları ancak kapora vermek için spor tesisine gittiğinde görebilirsin. Ama onun için de boşuna zaman harcayıp spor tesisine gitmen gerek.</p>
+                            <p>Peki bütün bunları ve daha fazlasını SportsSide'da görebilirsin desek? Üstelik sırf kapora vermek için spor tesisine gitmek derdini de bitirdiğimizi söylesek? Hadi kullan, kendin gör! Sadece 30 saniyede istediğin spor tesisinde maçın veya aktiviten hazır.</p>
+                        </article>
+                    </div>
+
+                    <div class="image-block mob-hide" style="background-image: url(&quot;img/content/Home-4/big_content_image_1.jpg&quot;);">
+                        <img alt="" src="~/img/content/Home-4/big_content_image_1.jpg" class="center-image" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- BLOCK "TYPE 2" -->
+        <!-- BLOCK "TYPE 2" -->
+        <div class="block type-2 scroll-to-block" data-id="why">
+            <div class="container-fluid type-2-text">
+                <div class="row">
+
+                    <div class="image-block mob-hide" style="background-image: url(&quot;~/img/content/Home-4/big_content_image_2.png&quot;);">
+                        <img alt="" src="~/img/content/Home-4/kobe-960x640.jpg" class="center-image" style="display: none;">
+                    </div>
+
+                    <div class="col-md-4 col-md-offset-7 col-sm-12 col-sm-offset-0 wow fadeInRight animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInRight;">
+                        <article class="normall">
+                            <h2 class="h2 titel-left">NASIL ÇALIŞIRIZ?</h2>
+                            <p>SahaKirala, hem oyuncunun, hem de spor tesisi sahiplerinin haklarını sonuna kadar korur. Her iki taraf arasında bir aracı görevi görürken, ortaya çıkabilecek sorunları da önler. Bu sebeple, hem hızlı, hem de güvenilirdir.</p>
+
+                        </article>
+                        <!-- BLOCK "TYPE 3" -->
+                        <div class="block type-3">
+                            <div class="container-fluid type-3-text">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <img src="~/img/theme-3/icon4.png" alt="">
+                                        <article class="small">
+                                            <h4 class="h4">GÜVENİLİRDİR</h4>
+                                            <p>SahaKirala, iki taraf arasında kurduğu özel sistem ve sürekli operasyon takibi ekibi sayesinde son derece güvenilirdir.</p>
+                                        </article>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <img src="~/img/theme-3/icon5.png" alt="">
+                                        <article class="small">
+                                            <h4 class="h4">ÇÖZÜM ÜRETİR</h4>
+                                            <p>info@sportsside.net nolu müşteri hizmetlerimiz aracılığıyla bütün sorunlarınıza hızlıca çözüm üretiriz.</p>
+                                        </article>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <img src="~/img/theme-3/icon6.png" alt="">
+                                        <article class="small">
+                                            <h4 class="h4">GÜNCELDİR</h4>
+                                            <p>Sürekli sizlerden gelen talepler doğrusunda web portalımızı günceller, isteklerinize en uygun düzeyde, hızlıca cevap vermeye çalışırız.</p>
+                                        </article>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- BLOCK "TYPE 3" -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- BLOCK "TYPE 2" -->
+
+        <div class="new-block parallax-bg-text scroll-to-block" data-id="benefits">
+            <div class="clip">
+                <div class="bg" style="background-image:url(~/img/content/Home-4/benefits_bg.png);">
+                </div>
+                <div class="bg-span"></div>
+            </div>
+
+            <div class="container">
+                <div class="row page-tagline">
+                    <div data-wow-delay="0.3s" class="col-md-12 wow flipInX animated" style="visibility: visible; animation-delay: 0.3s; animation-name: flipInX;">
+                        <h2 class="title">ARTILARIMIZ NELER?</h2>
+                        <div class="description">En büyük artısı, kolaylık! SportsSide sayesinde istediğin bölgede, istediğin saatte, istediğin spor tesisini sadece bir kaç dokunuşunla kiralarsın. Ayrıca fiyat bilgisi öğrenme, spor tesisi imkanlarını görme gibi bir çok artıya sahip olursun. Hadi kullan!</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- BLOCK "TYPE 3" -->
+        <div class="new-block type-3 type-3-1">
+            <div class="container type-3-text icons-at-the-top">
+                <div class="row">
+                    <div data-wow-delay="0.3s" class="col-md-6 col-sm-6 little-img-text-entry wow flipInY animated" style="visibility: visible; animation-delay: 0.3s; animation-name: flipInY;">
+                        <img src="~/img/theme-3/icon19.png" alt="">
+                        <article class="small">
+                            <h5 class="h5">NELER VAR?</h5>
+                            <p>Güncel rezervasyonlar, geçmiş tüm rezervasyonlar ve abone olduğun tüm spor tesislerine tek bir sayfada ulaşabilirsin. Dilediğin gibi tek tıkla tüm Türkiyede spor tesisi arayabilirsin.</p>
+                        </article>
+                    </div>
+                    <div data-wow-delay="0.6s" class="col-md-6 col-sm-6 little-img-text-entry wow flipInY animated" style="visibility: visible; animation-delay: 0.6s; animation-name: flipInY;">
+                        <img src="~/img/theme-3/icon14.png" alt="">
+                        <article class="small">
+                            <h5 class="h5">TARİH ve SAAT SEÇİMİ</h5>
+                            <p>İster hemen bugüne, istersen iki ay sonra istediğin bir gün ve saate rezervasyon yapabilirsin. Yani hem spontane, hem de planlı olmak istiyorsan; SportsSide tam sana göre!</p>
+                        </article>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- BLOCK "TYPE 5" -->
+        <div class="block type-5 scroll-to-block" data-id="how-it-work">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <article class="normall wow fadeInLeft animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                            <h2 class="h2 titel-left">SİSTEM</h2>
+                            <p>Uzun süredir üzerinde çalıştığımız sistemimize sonuna kadar güveniyoruz. Hem oyuncuları, hem de tesis sahiplerini düşünürek bütün detayları en ince ayrıntısına kadar kodlarımıza işledik. Size sadece sporun sihrini zahmetsizce yaşamak kaldı.</p>
+                        </article>
+                        <div class="slider register-login wow fadeInLeft animated" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInLeft;">
+                            <div class="swiper-container swiper-swiper-unique-id-0 initialized" data-autoplay="0" data-loop="0" data-speed="500" data-center="0" data-slides-per-view="1" id="swiper-unique-id-0">
+                                <div class="swiper-wrapper" style="width: 1470px; height: 203px;">
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 490px; height: 203px;">
+                                        <article class="normall">
+                                            <h4 class="h4">KAYIT &amp; GİRİŞ</h4>
+                                            <h5 class="h5">Tek tıkla giriş</h5>
+                                            <p>SportsSide'ı kullanabilmek için e-posta hesabı aracılığıyla kayıt olman yeterli.</p>
+                                        </article>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 490px; height: 203px;">
+                                        <article class="normall">
+                                            <h4 class="h4">Saha SEÇİMİ</h4>
+                                            <h5 class="h5">İster filtreyi kullan, ister yakın spor tesislerini seç!</h5>
+                                            <p>Tek yapman gereken arama sayfasındaki tesisler arasından sana en uygun olanı seçmek.</p>
+                                        </article>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 490px; height: 203px;">
+                                        <article class="normall">
+                                            <h4 class="h4">Çok Yakında!</h4>
+                                            <h5 class="h5">Takım ve Mesajlaşma</h5>
+                                            <p>Çok yakında SportsSide üzerinde kendi takımını oluşturabilecek, üyeler arasında mesajlaşabilecek, yepyeni bir sosyal ortamın kapılarını aralayacaksın.</p>
+                                        </article>
+                                    </div>
+                                </div>
+                                <div class="pagination pagination-swiper-unique-id-0"><span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch"></span><span class="swiper-pagination-switch"></span><span class="swiper-pagination-switch"></span></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    @*<div class="col-md-6 col-md-offset-1">
+                            <div class="triple-images-container">
+                                <img data-wow-delay="0.3s" class="wow flipInY animated" src="~/img/content/triple1.png" alt="" style="visibility: visible; animation-delay: 0.3s; animation-name: flipInY;">
+                                <img data-wow-delay="0.6s" class="wow flipInY animated" src="~/img/content/triple2.png" alt="" style="visibility: visible; animation-delay: 0.6s; animation-name: flipInY;">
+                                <img data-wow-delay="0.9s" class="wow flipInY animated" src="~/img/content/triple3.png" alt="" style="visibility: visible; animation-delay: 0.9s; animation-name: flipInY;">
+                            </div>
+                        </div>*@
+
+                    <div class="col-md-8 wow fadeInUp animated" data-wow-delay="0.6s" style="visibility: visible; animation-delay: 0.6s; animation-name: fadeInUp;">
+                        <div class="slider touru">
+                            <div class="swiper-container swiper-swiper-unique-id-1 initialized" data-autoplay="0" data-loop="0" data-speed="500" data-center="0" data-slides-per-view="1" id="swiper-unique-id-1">
+                                <div class="swiper-wrapper" style="width: 1500px; height: 409px;">
+                                    <div class="swiper-slide swiper-slide-visible swiper-slide-active" style="width: 750px; height: 409px;">
+                                        <a href="#" class="touru-thumbs">
+                                            <img src="~/img/screens/Sistem1.PNG" style="height:397px;" />
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 750px; height: 409px;">
+                                        <a href="#" class="touru-thumbs">
+                                            <img src="~/img/screens/Sistem2.PNG" style="height:397px;" />
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 750px; height: 409px;">
+                                        <a href="#" class="touru-thumbs">
+                                            <img src="~/img/screens/Sistem3.PNG" style="height:397px;" />
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 750px; height: 409px;">
+                                        <a href="#" class="touru-thumbs">
+                                            <img src="~/img/screens/Sistem4.PNG" style="height:397px;" />
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 750px; height: 409px;">
+                                        <a href="#" class="touru-thumbs">
+                                            <img src="~/img/screens/Sistem5.PNG" style="height:397px;" />
+                                        </a>
+                                    </div>
+                                    <div class="swiper-slide" style="width: 750px; height: 409px;">
+                                        <a href="#" class="touru-thumbs">
+                                            <img src="~/img/screens/Sistem6.PNG" style="height:397px;" />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="newSwitch" style="margin-top:40px;">
+                                    <div class="pagination1 pagination-swiper-unique-id-1" style="text-align:center;"><span class="swiper-pagination-switch swiper-visible-switch swiper-active-switch" style="height:9px !important; width:23px;"></span><span class="swiper-pagination-switch"></span></div>
+                                </div>
+                               
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- BLOCK "TYPE 5" -->
+
+        <!-- BLOCK "TYPE 6" -->
+        <!-- BLOCK "TYPE 7" -->
+        <div class="block type-7 scroll-to-block" data-id="contact">
+            <div class="container">
+                <div class="row page-tagline">
+                    <div class="col-md-6 col-md-offset-3 wow flipInX animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: flipInX;">
+                        <h2 class="title" style="color:#fff;">İLETİŞİM</h2>
+                        <div class="description" style="color:#fff;">Bütün sorularınız, önerileriniz veya talepleriniz için aşağıdaki bilgileri kullanabilirsiniz.</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-2 wow fadeInLeft animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                        <div class="contact-thumbs">
+                            <img src="~/img/theme-3/icon7.png" alt="">
+                            <article class="normall">
+                                <p style="color:#fff;">
+                                    Müşteri Hizmetleri:
+                                    <br>
+                                    <a href="tel:00908508851727" style="color:#fff;">0850 885 1727</a>
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                    <div class="col-md-4 wow fadeInLeft animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInLeft;">
+                        <div class="contact-thumbs">
+                            <img src="~/img/theme-3/icon8.png" alt="">
+                            <article class="normall">
+                                <p style="color:#fff;">
+                                    E-posta:
+                                    <br>
+                                    <a href="mailto:info@sportsside.net" style="color:#fff;">info@sportsside.net</a>
+                                </p>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+                @*<div class="col-md-7 col-md-offset-1 wow fadeInRight animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInRight;">
+                        <form class="contact-form" method="post">
+                            <input class="required" type="text" placeholder="Ad-Soyad" value="" name="name">
+                            <input class="required" type="text" placeholder="E-posta" value="" name="email">
+                            <input type="text" placeholder="Konu" value="" name="subject">
+                            <select name="department">
+                                <option>Öneri</option>
+                                <option>Şikayet</option>
+                                <option>İş Birliği</option>
+                                <option>Kariyer</option>
+                            </select>
+                            <textarea class="required" placeholder="Mesajın" name="text"></textarea>
+                            <div class="submit-wraper">
+                                <div class="button">GÖNDER<input type="submit" value=""></div>
+                            </div>
+                            <input type="hidden" name="mailto" value="bilgi@sahakirala.com" style="display: none;">
+                        </form>
+                    </div>*@
+
+
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-4 wow fadeInRight animated" data-wow-delay="0.3s" style="visibility: visible; animation-delay: 0.3s; animation-name: fadeInRight;">
+                        <div class="submit-wraper">
+                            <div class="button" onclick="location.href='@Url.Action("iletisim", "Home")'" style="width:250px;">GÖNDER</div>
+                        </div>
+                    </div>
+                    <div class="form-popup">
+                        <div class="form-popup-close-layer"></div>
+                        <div class="form-popup-content">
+                            <div class="text">Lorem Ipsum Dollor Sit Ammet consectetur dim Elit</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*<script>
+        $(document).ready(function () {
+            //var x = document.getElementById("demo");
+            debugger;
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(showPosition);
+            }
+            else {
+                x.innerHTML = "Geolocation is not supported by this browser.";
+            }
+        });
+
+        function showPosition(position) {
+            debugger;
+            var enlem = position.coords.latitude;
+            var boylam = position.coords.longitude;
+            var url = "/Home/Index";
+            var data = { enlem: enlem, boylam: boylam };
+
+
+            $.post(url, data, function (result) {
+                // TODO: do something with the response from the controller action
+            });
+
+            //x.innerHTML = "Latitude: " + position.coords.latitude +
+            //"<br>Longitude: " + position.coords.longitude;
+        }
+    </script>*@
+
+
+
+

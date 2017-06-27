@@ -1,0 +1,99 @@
+﻿@model sahakirala.Models.ReservationBigModel
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">Rezervasyon Bilgileri</h3>
+    </div>
+    <div class="panel-body" id="pnlRezervationInfos">
+        @{int startTime = 0, endTime = 0;
+            string weekDay = "";
+            DateTime dateValue = Model.Date;
+            weekDay = dateValue.DayOfWeek.ToString();
+        }
+        @for (int i = 0; i < 24; i++)
+        {
+            bool isDone = false;
+            string val = "", nextVal = "";
+            startTime = i;
+            if (i < 10)
+            {
+                val = "0" + i.ToString();
+                nextVal = "";
+                nextVal = (i == 9) ? "10" : "0" + (i + 1).ToString();
+            }
+            else
+            {
+                val = i.ToString();
+                nextVal = (i + 1).ToString();
+            }
+            if ((Model.Date < DateTime.Now.Date) || (Model.Date == DateTime.Now.Date && i <= DateTime.Now.Hour))
+            {
+                <button type="button" class="btn btn-danger btnHour" value="@val" disabled>
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> @val:00 - @nextVal:00
+                </button>
+            }
+            else
+            {
+                foreach (var item in Model.Subscribers)
+                {
+                    string modelStartTime = item.S_TIME.ToString().Substring(0, 2);
+                    if ((item.WEEK_DAY.ToString() == weekDay) && (startTime == int.Parse(modelStartTime)) && (isDone == false))
+                    {
+                        <button type="button" class="btn btn-danger btnHour" value="@val" disabled>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> @val:00 - @nextVal:00
+                        </button>
+
+                        isDone = true;
+                        break;
+                    }
+                }
+                foreach (var item in Model.Reservations)
+                {
+                    DateTime modelDate = item.DT_BEGIN.Date;
+                    string modelStartTime = item.DT_BEGIN.Hour.ToString();
+                    if ((Model.Date == modelDate) && (startTime == int.Parse(modelStartTime)) && (isDone == false))
+                    {
+                        <button type="button" class="btn btn-danger btnHour" value="@val" disabled>
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> @val:00 - @nextVal:00
+                        </button>
+                        isDone = true;
+                        break;
+                    }
+                }
+
+                if (isDone == false)
+                {
+                    <button type="button" class="btn btn-success btnHour" value="@val" id="@val">
+                        <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> @val:00 - @nextVal:00
+                    </button>
+                }
+            }
+        }
+        @*<button type="button" class="btn btn-danger" id="btnSubscribe">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 12:00 - 13:00
+            </button>
+            <button type="button" class="btn btn-success" id="btnSubscribe">
+                <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> 13:00 - 14:00
+            </button>*@
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('#00, #01, #02, #03, #04, #05, #06, #07, #08, #09, #10, #11, #12, #13, #14, #15, #16, #17, #18, #19, #20, #21, #22, #23').click(function () {
+            var val = $(this).attr("value");
+            var facilityId = hdnFacility.value;
+            var myDate = $("#hdnDate").val();
+            $.ajax({
+                url: "/Reservation/SearchSummary",
+                type: "GET",
+                data: { id: facilityId, date: myDate, hour: val }
+            })
+                .done(function (partialViewResult) {
+                    $("#partialSummary").hide();
+                    $("#partialSummary").fadeIn("1000");
+                    $("#partialSummary").html(partialViewResult);
+                });
+        });
+    });
+
+</script>

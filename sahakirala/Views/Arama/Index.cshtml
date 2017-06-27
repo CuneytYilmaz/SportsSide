@@ -1,0 +1,219 @@
+﻿@model PagedList.IPagedList<Database.FACILITY>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "SportSide - Arama";
+    Layout = "~/Views/Shared/_RezervasyonLayout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/js/jsArama.js"></script>
+<script src="~/js/jquery.inputmask.bundle.js"></script>
+
+
+<h2>Arama Formu</h2>
+@using (Html.BeginForm())
+{
+    <div class="row">
+        <div class="col-md-6">
+            @Html.TextBox("SearchString", null, new { @class = "form-control", placeholder = "Tesis İsmini Giriniz", @id = "SearchString" })
+        </div>
+
+        <div class="form-group col-md-6">
+                @Html.DropDownList("ddlAreas", ViewBag.Areas as SelectList, "Seçiniz", new { @class = "form-control input-sm select2search", id = "ddlAreas"})
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <select class="form-control" id="FacilityType" name="FacilityType">
+                <option>Tesis Türü Seç</option>
+            </select>
+        </div>
+
+        <div class="form-group col-md-6">
+            @Html.DropDownList("ddlCities", Enumerable.Empty<SelectListItem>(), "Bölge Seçiniz", new { @class = "form-control input-sm select2search", id = "ddlCities" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3">
+            @Html.TextBox("Price1", null, new { @class = "form-control", placeholder = "Düşük Fiyatı Giriniz", @id = "Price1" })
+        </div>
+
+        <div class="col-md-3">
+            @Html.TextBox("Price2", null, new { @class = "form-control", placeholder = "Yüksek Fiyatı Giriniz", @id = "Price2" })
+        </div>
+        <div class="col-md-6">
+            @Html.DropDownList("ddlDistricts", Enumerable.Empty<SelectListItem>(), "Şehir Seçiniz", new { @class = "form-control input-sm select2search", id = "ddlDistricts" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <button class="form-control araBtn" id="@Url.Action("Index", "Arama")"><i class="fa fa-search" aria-hidden="true"></i> Ara</button>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered" style="margin-top:50px;">
+                <tr>
+                    <th>Tesis Adı</th>
+                    <th>İl</th>
+                    <th>İlçe</th>
+                    <th>Fiyat</th>
+                    <th>Kapasite</th>
+                    <th>Tesis Türü</th>
+                    <th></th>
+                </tr>
+                @foreach (var item in @Model)
+                {
+
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT.CITY.CITY_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DISTRICT.DISTRICT_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_PRICE)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_CAPACITY)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FACILITY_TYPE1.FT_NAME)
+                        </td>
+                        @*<td><a href="@Url.Action("Index", "Reservation", new { id = item.FACILITY_ID})">Seç</a></td>*@
+                        <td style="text-align:center;">
+                            <input type="button" onclick="location.href='@Url.Action("Index", "Reservation", new { id = item.FACILITY_ID})'" class="btn btn-primary" value="Seç"/>
+                        </td>
+                    </tr>
+                }
+            </table>
+            <ul class="pager">
+                <li class="next">
+
+                    @*Sayfalandırma kodu*@
+                    <br /> Sayfa @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+                </li>
+            </ul>
+        </div>
+    </div>
+        @*
+            <tr>
+                <td>Serdivan Halı Saha</td>
+                <td>Sakarya</td>
+                <td>Serdivan</td>
+                <td>Kemalpaşa</td>
+                <td>100 TL</td>
+                <td>14</td>
+                <td>Futbol</td>
+                <td><a href="#">Seç</a></td>
+            </tr>
+            <tr>
+                <td>Söğütlü Halı Saha</td>
+                <td>Sakarya</td>
+                <td>Söğütlü</td>
+                <td>Mahalle</td>
+                <td>120 TL</td>
+                <td>14</td>
+                <td>Futbol</td>
+                <td><a href="#">Seç</a></td>
+            </tr>
+            <tr>
+                <td>Sakarya Üniversitesi Salonu</td>
+                <td>Sakarya</td>
+                <td>Serdivan</td>
+                <td>Kampüs</td>
+                <td>50 TL</td>
+                <td>10</td>
+                <td>Basketbol</td>
+                <td><a href="#">Seç</a></td>
+            </tr>*@
+
+        @*}*@
+}
+
+@*<script>
+    function cityChanged() {
+        debugger;
+        var e = document.getElementById("_CityId");
+        var Id = e.options[e.selectedIndex].value;
+        var url = '@Url.Action("DistrictByCityId", "Arama")';
+        $.post(url, Id, function (result) {
+            //ada.calljx('/Home/DistrictByCityId', { cityId: Id }, 'body', function (d) {
+                debugger;
+            //ada.ajaxReturn(d, function (data) {
+            //    $('#_DistrictId').empty();
+            //    $('#_DistrictId').select2('data', null);
+            //    $('#_DistrictId').select2('data', { text: 'Seçiniz', id: '' });
+            //    $.each(data.liste, function (i, e) {
+            //        var x = document.getElementById("_DistrictId");
+            //        var option = document.createElement("option");
+            //        option.text = e.IlceAdi;
+            //        option.value = e.IlceAdi;
+            //        x.add(option);
+            //    });
+            //});
+        });
+    }
+</script>*@
+
+@*<script>
+        function cityChanged() {
+            var e = document.getElementById("_AreaId");
+            var Id = e.options[e.selectedIndex].value;
+            $("#_CityId").empty();
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: "http://localhost:4285/SSApi/GetCitiesByAreas",
+                data: { areaId: Id },
+                success: function (data) {
+                    $(data).each(function (key, item) {
+                        $("#_CityId").append(
+                            $("<option></option>").val(item.CITY_ID).html(item.CITY_NAME)
+                        );
+                    });
+                },
+                error: function (req, status, err) {
+                    console.log("HATA : ", req, status, err);
+                }
+            });
+        };
+</script>*@
+
+<script>
+            $(document).ready(function () {
+                //var x = document.getElementById("demo");
+                debugger;
+                if (navigator.geolocation) {
+                    navigator.geolocation.watchPosition(showPosition);
+                }
+                else {
+                    x.innerHTML = "Geolocation is not supported by this browser.";
+                }
+            });
+
+            function showPosition(position) {
+                debugger;
+                var enlem = position.coords.latitude;
+                var boylam = position.coords.longitude;
+                var url = "/Arama/Index";
+                var data = { enlem: enlem, boylam: boylam };
+
+
+                $.post(url, data, function (result) {
+                    // TODO: do something with the response from the controller action
+                });
+
+                //x.innerHTML = "Latitude: " + position.coords.latitude +
+                //"<br>Longitude: " + position.coords.longitude;
+            }
+</script>

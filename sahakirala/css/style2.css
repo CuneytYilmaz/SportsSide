@@ -1,0 +1,106 @@
+﻿nav a.act{
+    background:#24855F;
+}
+nav a{
+    position: relative;
+    float: left;
+    color: #fff;
+    font-size: 17px;
+    height: 39px;
+    line-height: 39px;
+    padding: 0px 15px;
+}
+nav a:focus{
+    color:#fff;
+}
+nav ul li{
+    background: none;
+    position: relative;
+    float: left;
+}
+ul li{
+    list-style:none;
+    padding-left: 12px;
+}
+#logo{
+    position: relative;
+    float: left;
+    margin-left: 70px;
+    margin-top: 28px;
+}
+a, a:link{
+    cursor: pointer;
+    text-decoration: none;
+    outline: none;
+}
+nav{
+    position: relative;
+    float: right;
+    padding-right: 45px;
+}
+header{
+    padding:20px;
+    width: 100%;
+    z-index: 11;
+}
+nav a:hover{
+    background:#fff; 
+    color: #24855F;
+    border-radius:5px;
+}
+.reservation-ul{
+    margin-top:-40px;
+}
+.form-control{
+    margin:10px;
+}
+.araBtn{
+    background:#24855F !important;
+    color:#fff !important;
+}
+
+footer.site-footer {
+    margin-top: 50px;
+    font-size: 14px;
+    font-family: "Open Sans",sans-serif;
+    font-weight: lighter;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.02);
+    position: relative;
+    transition: .5s;
+}
+
+footer.site-footer .bottom-footer {
+    background: #343434;
+    color: #ccc;
+    padding: 20px 0;
+    font-size: 12px;
+    position: relative;
+    z-index: 5;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.1);
+    font-weight: normal;
+}
+.contact-link{
+    color:#ccc;
+}
+
+.contact-link:hover{
+    text-decoration:none;
+    color:#ccc;
+}
+.layoutWidth{
+    width:970px;
+}
+.ulSayfa{
+    margin-left:-52px;
+}
+.ulSayfa li{
+    list-style:none;
+    padding:5px;
+}
+.ulSayfa a{
+    color:#ccc;
+}
+.ulSayfa a:hover{
+    color:#ccc;
+    text-decoration:none;
+}

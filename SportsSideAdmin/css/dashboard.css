@@ -1,0 +1,10 @@
+﻿body {
+}
+
+#morris-donut-chart svg{
+    height:189px;
+}
+
+.easypiechart{
+    margin: 46px auto 19px auto;
+}

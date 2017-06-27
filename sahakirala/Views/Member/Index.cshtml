@@ -1,0 +1,369 @@
+﻿@model sahakirala.Models.MemberBigModel
+@using PagedList.Mvc
+
+@{
+    ViewBag.Title = "SportsSide - Kullanıcı Bilgileri";
+    Layout = "~/Views/Shared/_RezervasyonLayout.cshtml";
+}
+
+@using (Html.BeginForm("Index", "Member", FormMethod.Post))
+{
+    @Html.HiddenFor(model => model.User.USER_ID)
+    @Html.HiddenFor(model => model.User.USER_NAME)
+    @Html.HiddenFor(model => model.User.USER_TYPE)
+    @Html.HiddenFor(model => model.User.USER_POS)
+    @Html.HiddenFor(model => model.User.USER_NEG)
+    @Html.HiddenFor(model => model.User.DISTRICT.DISTRICT_ID)
+    @Html.HiddenFor(model => model.User.DISTRICT.CITY.CITY_ID)
+    @Html.HiddenFor(model => model.User.DISTRICT.CITY.AREA_ID)
+
+    <h2>Kullanıcı Bilgileri</h2>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.User.USER_FIRST_NAME, new { @class = "form-control", placeholder = "Adınızı Giriniz", @id = "UserName" })
+            @Html.ValidationMessageFor(model => model.User.USER_FIRST_NAME, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.User.USER_SURNAME, new { @class = "form-control", placeholder = "Soyadınızı Giriniz", @id = "UserSurname" })
+            @Html.ValidationMessageFor(model => model.User.USER_SURNAME, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.User.DISTRICT.CITY.AREA_ID, ViewBag.Areas as SelectList, new { @class = "form-control input-sm select2search", @id = "ddlAreas" })
+            @Html.ValidationMessageFor(model => model.User.DISTRICT.CITY.AREA.AREA_ID, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.User.USER_MAIL, new { @class = "form-control", placeholder = "E-Mailinizi Giriniz", @id = "UserMail" })
+            @Html.ValidationMessageFor(model => model.User.USER_MAIL, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.User.USER_PASSWORD, new { @class = "form-control", placeholder = "Şifrenizi Giriniz", @id = "UserPassword1", @type = "password" })
+            @Html.ValidationMessageFor(model => model.User.USER_PASSWORD, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.User.DISTRICT.CITY_ID, ViewBag.Cities as SelectList, new { @class = "form-control input-sm select2search", @id = "ddlCities" })
+            @Html.ValidationMessageFor(model => model.User.DISTRICT.CITY.CITY_ID, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.User.USER_GSM, new { @class = "form-control", placeholder = "Telefon Numaranızı Giriniz", @id = "UserNumber", maxlength = 10 })
+            @Html.ValidationMessageFor(model => model.User.USER_GSM, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.TextBoxFor(model => model.User.USER_PASSWORD, new { @class = "form-control", placeholder = "Şifrenizi Giriniz", @id = "UserPassword2", @type = "password" })
+            @Html.ValidationMessageFor(model => model.User.USER_PASSWORD, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+        <div class="col-md-4">
+            @Html.DropDownListFor(model => model.User.USER_DISTRICT, ViewBag.Districts as SelectList, new { @class = "form-control input-sm select2search", @id = "ddlDistricts" })
+            @Html.ValidationMessageFor(model => model.User.USER_DISTRICT, "", new { @class = "text-danger", @style = "margin-left:10px;" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <button class="form-control araBtn" id="http://localhost:30471/Arama/Index" style="margin-bottom:80px;"><i class="fa fa-check" aria-hidden="true"></i> Kaydet</button>
+        </div>
+    </div>
+
+    <div>
+
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="memberTabs" role="tablist">
+            <li role="presentation" class="active"><a href="#guncel" aria-controls="guncel" role="tab" data-toggle="tab" id="0">Güncel Rezervasyonlar</a></li>
+            <li role="presentation"><a href="#eski" aria-controls="eski" role="tab" data-toggle="tab" id="1">Geçmiş Rezervasyonlar</a></li>
+            <li role="presentation"><a href="#abone" aria-controls="abone" role="tab" data-toggle="tab" id="2">Abonelikler</a></li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            @{
+                string nowTime = System.DateTime.Now.Hour.ToString();
+            }
+            <div role="tabpanel" class="tab-pane active" id="guncel">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered" style="margin-top:50px;">
+                        <tr>
+                            <th>Tesis Adı</th>
+                            <th>Rezervasyon Başlangıç</th>
+                            <th>Rezervasyon Bitiş</th>
+                            <th>Oluşturulma Tarihi</th>
+                            <th>Durumu</th>
+                            <th></th>
+                        </tr>
+
+
+                        @foreach (var item in Model.LiveReservations)
+                        {
+                            if (item.STATUS == "A")
+                            {
+                                TempData["reservationControl"] = "success";
+                                item.STATUS = "Kabul Edildi";
+                            }
+                            else if (item.STATUS == "P")
+                            {
+                                TempData["reservationControl"] = "warning";
+                                item.STATUS = "Beklemede";
+                            }
+                            else if (item.STATUS == "R")
+                            {
+                                TempData["reservationControl"] = "danger";
+                                item.STATUS = "Red Edildi";
+                            }
+
+                            <tr id="reservationControl" class="@TempData["reservationControl"]">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_BEGIN).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_END).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.CREATED_DATE).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STATUS)
+                                    @Html.Hidden("status", item.STATUS)
+                                </td>
+                                <td style="text-align:center;">
+                                    @if (item.STATUS == "Red Edildi")
+                                    {
+                                        <input type="button" value="Rezervasyon İptal" class="btn btn-danger btn-sm btnDeleteReservation" disabled id="@item.RESERVATION_ID" />
+                                    }
+                                    else
+                                    {
+                                        <input type="button" value="Rezervasyon İptal" class="btn btn-danger btn-sm btnDeleteReservation" id="@item.RESERVATION_ID" />
+                                    }
+                                </td>
+                            </tr>
+
+                        }
+
+
+                    </table>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.LiveReservations.PageCount < Model.LiveReservations.PageNumber ? 0 : Model.LiveReservations.PageNumber) / @Model.LiveReservations.PageCount
+                            @Html.PagedListPager(Model.LiveReservations, pageActive => Url.Action("Index", new { pageActive, selectedTab = 0 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="eski">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered" style="margin-top:50px;">
+                        <tr>
+                            <th>Tesis Adı</th>
+                            <th>Rezervasyon Başlangıç</th>
+                            <th>Rezervasyon Bitiş</th>
+                            <th>Oluşturulma Tarihi</th>
+                            <th>Durumu</th>
+                        </tr>
+                        @foreach (var item in Model.oldReservations)
+                        {
+                            if (item.STATUS == "A")
+                            {
+                                TempData["reservationControl"] = "success";
+                                item.STATUS = "Kabul Edildi";
+                            }
+                            else if (item.STATUS.StartsWith("P"))
+                            {
+                                TempData["reservationControl"] = "warning";
+                                item.STATUS = "Beklemede";
+                            }
+                            else if (item.STATUS.StartsWith("R"))
+                            {
+                                TempData["reservationControl"] = "danger";
+                                item.STATUS = "Red Edildi";
+                            }
+
+                            <tr id="reservationEski" class="@TempData["reservationControl"]">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_BEGIN).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_END).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.CREATED_DATE).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STATUS)
+                                    @Html.Hidden("status", item.STATUS)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.oldReservations.PageCount < Model.oldReservations.PageNumber ? 0 : Model.oldReservations.PageNumber) / @Model.oldReservations.PageCount
+                            @Html.PagedListPager(Model.oldReservations, pageHistory => Url.Action("Index", new { pageHistory, selectedTab = 1 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="abone">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered" style="margin-top:50px;">
+                        <tr>
+                            <th>Tesis Adı</th>
+                            <th>Gün</th>
+                            <th>Saat</th>
+                            <th>Durumu</th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.Subscribers)
+                        {
+                            if (item.STATUS == "A")
+                            {
+                                TempData["reservationControl"] = "success";
+                                item.STATUS = "Kabul Edildi";
+                            }
+                            else if (item.STATUS == "P")
+                            {
+                                TempData["reservationControl"] = "warning";
+                                item.STATUS = "Beklemede";
+                            }
+                            else if (item.STATUS == "R")
+                            {
+                                TempData["reservationControl"] = "danger";
+                                item.STATUS = "Red Edildi";
+                            }
+
+                            if (item.WEEK_DAY == "Monday")
+                            {
+                                item.WEEK_DAY = "Pazartesi";
+                            }
+                            else if (item.WEEK_DAY == "Tuesday")
+                            {
+                                item.WEEK_DAY = "Salı";
+                            }
+                            else if (item.WEEK_DAY == "Wednesday")
+                            {
+                                item.WEEK_DAY = "Çarşamba";
+                            }
+                            else if (item.WEEK_DAY == "Thursday")
+                            {
+                                item.WEEK_DAY = "Perşembe";
+                            }
+                            else if (item.WEEK_DAY == "Friday")
+                            {
+                                item.WEEK_DAY = "Cuma";
+                            }
+                            else if (item.WEEK_DAY == "Saturday")
+                            {
+                                item.WEEK_DAY = "Cumartesi";
+                            }
+                            else if (item.WEEK_DAY == "Sunday")
+                            {
+                                item.WEEK_DAY = "Pazar";
+                            }
+
+
+
+                            <tr id="abonee" class="@TempData["reservationControl"]">
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.WEEK_DAY)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.S_TIME).ToString()).ToShortTimeString()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.STATUS)
+                                    @Html.Hidden("status", item.STATUS)
+                                </td>
+                                <td style="text-align:center;">
+                                    @{
+                                        if (item.STATUS == "Red Edildi")
+                                        {
+                                            <input type="button" value="Abonelikten Çık" class="btn btn-danger btn-sm btnDeleteSubscribe" id="@item.SUBSCRIBER_ID" disabled />
+                                        }
+                                        else
+                                        {
+                                            <input type="button" value="Abonelikten Çık" class="btn btn-danger btn-sm btnDeleteSubscribe" id="@item.SUBSCRIBER_ID" />
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                                        }
+                    </table>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.Subscribers.PageCount < Model.Subscribers.PageNumber ? 0 : Model.Subscribers.PageNumber) / @Model.Subscribers.PageCount
+                            @Html.PagedListPager(Model.Subscribers, pageSub => Url.Action("Index", new { pageSub, selectedTab = 2 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        @Html.HiddenFor(model => model.selectedTab, new { @id = "selectedTab" })
+    </div>
+                                        }
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">İşlem Sonucu</h4>
+            </div>
+            <div class="modal-body">
+                <div id="mdResult">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success resultOK" id="@Url.Action("Index", "Member")">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade bs-example-modal-sm" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header alert-danger">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Hata</h4>
+            </div>
+            <div class="modal-body">
+                Şifreler aynı değil!
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="errorOK">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/js/jquery.inputmask.bundle.js"></script>
+<script src="~/js/bootbox.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+<script src="~/js/jsMember.js"></script>
+
+<link rel="stylesheet" type="text/css" href="~/css/sweetalert.css">

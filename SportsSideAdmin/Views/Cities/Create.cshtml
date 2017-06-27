@@ -1,0 +1,62 @@
+﻿@model SportsSide.DAL.CITY
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Şehir Oluştur</h2>
+
+
+@using (Html.BeginForm("Create", "Cities", FormMethod.Post, new { @class = "form-horizontal", role = "form" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <hr />
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+            </div>
+        }
+        <div class="form-group">
+            @Html.Label("Bölge Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.AREA_ID, ViewBag.Areas as SelectList, "Seçiniz", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.AREA_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Şehir Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CITY_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Şehir adı giriniz" } })
+                @Html.ValidationMessageFor(model => model.CITY_NAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Şehir Kodu :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.CITY_CODE, new { htmlAttributes = new { @class = "form-control", placeholder = "Şehir kodu giriniz" } })
+                @Html.ValidationMessageFor(model => model.CITY_CODE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Cities")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

@@ -1,0 +1,78 @@
+﻿@model PagedList.IPagedList<SportsSide.DAL.FACILITY_TYPE>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div id="overlay"></div>
+<div id="frame">
+    <img id="main" src="" alt="" />
+</div>
+
+<h2>Tesis Türleri</h2>
+
+<p>
+    <input type="button" value="Yeni Oluştur" class="btn btn-success" onclick="location.href='@Url.Action("Create", "FacilityTypes")'" />
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Tesis Türleri
+    </div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered">
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                            Tesis Türü
+                        </th>
+                        <th>
+                            Tesis Türü Fotoğrafı
+                        </th>
+                        <th></th>
+                    </tr>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FT_ID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FT_NAME)
+                            </td>
+                            <td style="width:250px;">
+                                <button type="button" class="btn btn-warning btn-sm" id="@item.FT_PICTURE" value="@item.FT_NAME">
+                                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Görüntüle
+                                </button>
+                                @*<img id="1" src="@item.FT_PICTURE" alt="img" />*@
+                                @*@Html.DisplayFor(modelItem => item.FT_PICTURE)*@
+                            </td>
+                            <td>
+                                <input type="button" value="Düzenle" class="btn btn-info btn-sm" onclick="location.href='@Url.Action("Edit", "FacilityTypes", new { id = item.FT_ID})'" />
+                                <input type="button" value="Sil" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Delete", "FacilityTypes", new { id = item.FT_ID})'" />
+                            </td>
+                        </tr>
+                    }
+                </table>
+                <!-- Pager -->
+                <ul class="pager">
+                    <li class="next" id="displayPager">
+                        @*Sayfalandırma kodu*@
+                        <br /> Sayfa @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                        @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/facilityType.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

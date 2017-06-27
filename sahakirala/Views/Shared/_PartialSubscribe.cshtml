@@ -1,0 +1,156 @@
+﻿@model sahakirala.Models.ReservationBigModel
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header" style="background-color:#faebcc;">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Abonelik</h4>
+            </div>
+            <div class="modal-body">
+
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.Label("Gün ve saat seçerek tesise abone olabilirsiniz! :", htmlAttributes: new { @class = "control-label col-md-12 subscribeLabel" })
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Gün :", htmlAttributes: new { @class = "control-label col-md-3 subscribeLabel" })
+                        <div class="col-md-9" style="padding-right:30px;">
+                            @Html.DropDownList("ddlDays", ViewBag.Days as SelectList, "Gün Seçiniz", new { @class = "form-control", @id = "ddlDays" })
+                            <span class="text-danger field-validation-error" id="validateDay" style="padding-left:23px;"></span>
+                            @*@Html.DropDownListFor(model => model.sDay, ViewBag.Days as SelectList, "Gün Seçiniz", new { @class = "form-control", @id = "ddlDays" })*@
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.Label("Saat Aralığı :", htmlAttributes: new { @class = "control-label col-md-3 subscribeLabel" })
+                        <div class="col-md-9" style="padding-right:30px;">
+                            @Html.DropDownList("ddlHours", ViewBag.Hours as SelectList, "Saat Aralığı Seçiniz", new { @class = "form-control", @id = "ddlHours" })
+                            <span class="text-danger field-validation-error" id="validateHour" style="padding-left:23px;"></span>
+                            @*@Html.DropDownListFor(model => model.sHour, ViewBag.Hours as SelectList, "Saat Aralığı Seçiniz", new { @class = "form-control", @id = "ddlHours" })*@
+                        </div>
+                    </div>
+
+                    @{ if (Model.isProblem == "Y")
+                        {
+                                <div class="alert alert-danger" id="dvErrors">
+                                    Dikkat ! Aşağıdaki gün ve saatlerde rezervasyonlar mevcuttur. Yine de abone olmak istiyor musunuz?
+                                </div>
+                                <table class="table table-hover table-bordered" id="dvErrorTable">
+                                    <tr>
+                                        <th>
+                                            Rezervasyon Tarihi
+                                        </th>
+                                        <th>
+                                            Rezervasyon Saat Aralığı
+                                        </th>
+                                    </tr>
+                                    @foreach (var item in Model.Reservations)
+                                    {
+                                        string Hour = item.DT_BEGIN.Hour.ToString();
+                                        string nextHour = "";
+                                        if (int.Parse(Hour) < 10)
+                                        {
+                                            Hour = "0" + Hour;
+                                            nextHour = (int.Parse(Hour) == 9) ? "10" : "0" + (int.Parse(Hour) + 1).ToString();
+                                        }
+                                        else
+                                        {
+                                            nextHour = (int.Parse(Hour) + 1).ToString();
+                                        }
+                                        <tr>
+                                            <td>
+                                                @item.DT_BEGIN.ToShortDateString()
+                                            </td>
+                                            <td>
+                                                @Hour:00 - @nextHour:00
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                        }
+                        else if (Model.isProblem == "N")
+                        {
+                            <div class="alert alert-success dvError" id="dvNoError">
+                                Başarılı bir şekilde abone oldunuz.
+                            </div>
+                        }
+                        else if (Model.isProblem == "E")
+                        {
+                            <div class="alert alert-danger" id="dvErrors">
+                                Aynı saatte başka bir abone mevcut!
+                            </div>
+                        }
+                    }
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">İptal</button>
+                <button type="button" class="btn btn-success variableButton" id="@(Model.isProblem == "Y" ? "btnApproveSubscribe" : "btnModalSubscribe")"  >Abone Ol</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnModalSubscribe").click(function () {
+            $("#validateDay").text("");
+            $("#validateHour").text("");
+            if ($("#ddlDays").val() == null || $("#ddlDays").val() == "") {
+                $("#validateDay").text("Lütfen gün seçiniz.")
+                return false;
+            }
+            else if ($("#ddlHours").val() == null || $("#ddlHours").val() == "") {
+                $("#validateHour").text("Lütfen saat aralığı seçiniz")
+                return false;
+            }
+
+            var facilityId = hdnFacility.value;
+            var myDay = $("#ddlDays").val();
+            var myHour = $("#ddlHours").val();
+            var myHourText = $("#ddlHours option:selected").text();
+            $('#myModal').modal('hide');
+            $.ajax({
+                url: "/Reservation/CheckSub",
+                type: "GET",
+                data: { id: facilityId, day: myDay, hour: myHour, hourText: myHourText }
+            })
+            .done(function (partialViewResult) {
+                $("#partialSubscribe").html(partialViewResult);
+                $('#myModal').modal('show');
+                $("#ddlDays").val(myDay);
+                $("#ddlHours").val(myHour);
+                $("#btnModalSubscribe").attr("disabled", true);
+                if ($(".dvError").attr("id") == "dvNoError") {
+                    var url = '@Url.Action("Index", "Member")';
+                    hrefTimeout(url);
+                };
+            });
+        });
+
+        $("#btnApproveSubscribe").click(function () {
+            var facilityId = hdnFacility.value;
+            var myDay = $("#ddlDays").val();
+            var myHour = $("#ddlHours").val();
+            var myHourText = $("#ddlHours option:selected").text();
+            $('#myModal').modal('hide');
+            $.ajax({
+                url: "/Reservation/CreateSubscribe",
+                type: "POST",
+                crossDomain: true,
+                data: { id: facilityId, day: myDay, hour: myHour, hourText: myHourText }
+            })
+            .done(function (data) {
+                $("#ddlDays").val(myDay);
+                $("#ddlHours").val(myHour);
+                swal("Abonelik!", "Aboneliğiniz iletilmiştir!", "success")
+                var url = '@Url.Action("Index", "Member")';
+                hrefTimeout(url);
+            });
+        });
+    });
+
+    function hrefTimeout(url) {
+        setTimeout(function () { window.location.href = url }, 2000);
+    }
+</script>

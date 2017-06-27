@@ -1,0 +1,63 @@
+﻿@model SportsSide.DAL.DISTRICT
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>İlçe Detayları</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            İlçe Adı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DISTRICT_NAME)
+        </dd>
+
+        <dt>
+            Posta Kodu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DISTRICT_ZIP_CODE)
+        </dd>
+
+        <dt>
+            İl Adı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY.CITY_NAME)
+        </dd>
+
+        <dt>
+            Şehir Kodu
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY.CITY_CODE)
+        </dd>
+
+        <dt>
+            Bölge Adı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CITY.AREA.AREA_NAME)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.DISTRICT_ID }) |
+    @Html.ActionLink("Geri Dön", "Index")
+</p>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

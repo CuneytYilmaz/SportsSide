@@ -1,0 +1,103 @@
+﻿@model SportsSide.DAL.FACILITY
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Tesis Detayları</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Tesis Adı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FACILITY_NAME)
+        </dd>
+
+        <dt>
+            Tesis Sahibi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.USERS.USER_FIRST_NAME) @Html.DisplayFor(model => model.USERS.USER_SURNAME)
+        </dd>
+
+        <dt>
+            Tesis Türü
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FACILITY_TYPE1.FT_NAME)
+        </dd>
+
+        <dt>
+            Tesis Kapasitesi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FACILITY_CAPACITY)
+        </dd>
+
+        <dt>
+            Tesis Fiyatı
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FACILITY_PRICE)
+        </dd>
+
+        <dt>
+            Tesis Açıklaması
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FACILITY_CONTENT)
+        </dd>
+
+        <dt>
+            Tesis Adresi
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FACILITY_ADDRESS)
+        </dd>
+
+        <dt>
+            İlçe
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DISTRICT.DISTRICT_NAME)
+        </dd>
+
+        <dt>
+            İl
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DISTRICT.CITY.CITY_NAME)
+        </dd>
+
+        <dt>
+            Bölge
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DISTRICT.CITY.AREA.AREA_NAME)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Düzenle", "Edit", new { id = Model.FACILITY_ID }) |
+    @Html.ActionLink("Geri Dön", "Index")
+</p>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

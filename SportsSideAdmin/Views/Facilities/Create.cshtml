@@ -1,0 +1,132 @@
+﻿@model SportsSide.DAL.FACILITY
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Tesis Oluştur</h2>
+
+<hr />
+
+<div class="form-horizontal">
+    @if (TempData["Hata"] != null)
+    {
+        <div class="alert alert-danger">
+            <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+        </div>
+    }
+    <div class="form-group">
+        @Html.Label("Tesis Fotoğrafı :", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            <form action="@Url.Content("/Facilities/GetPictures")" method="post" enctype="multipart/form-data" class="dropzone" id="dropzoneExample">
+                <div class="fallback">
+                    <input type="file" name="file" multiple />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@using (Html.BeginForm("Create", "Facilities", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="form-group">
+            @Html.Label("Tesis Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FACILITY_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Tesis adı giriniz" } })
+                @Html.ValidationMessageFor(model => model.FACILITY_NAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tesis İçeriği :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.FACILITY_CONTENT, new { @class = "form-control", placeholder = "Tesis içeriği giriniz", @style = "resize: vertical;" })
+                @Html.ValidationMessageFor(model => model.FACILITY_CONTENT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tesis Türü :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.FACILITY_TYPE, ViewBag.FacilityTypes as SelectList, "Tesis Türü Seçiniz", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.FACILITY_TYPE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tesis Kapasitesi :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FACILITY_CAPACITY, new { htmlAttributes = new { @class = "form-control", placeholder = "Tesis kapasitesi giriniz" } })
+                @Html.ValidationMessageFor(model => model.FACILITY_CAPACITY, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Rezervasyon Fiyatı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <div class="input-group">
+                    <div class="input-group-addon">₺</div>
+                    @Html.EditorFor(model => model.FACILITY_PRICE, new { htmlAttributes = new { @class = "form-control", placeholder = "Rezervasyon fiyatı giriniz" } })
+                    @Html.ValidationMessageFor(model => model.FACILITY_PRICE, "", new { @class = "text-danger" })
+                    <div class="input-group-addon">.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Bölge Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ddlAreas", ViewBag.Areas as SelectList, "Seçiniz", new { @class = "form-control", @id = "ddlAreas" })
+                @Html.ValidationMessageFor(model => model.DISTRICT.CITY.AREA.AREA_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Şehir Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownList("ddlCities", Enumerable.Empty<SelectListItem>(), "Bölge Seçiniz", new { @class = "form-control", @id = "ddlCities" })
+                @Html.ValidationMessageFor(model => model.DISTRICT.CITY.AREA.AREA_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("İlçe Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.DISTRICT_ID, Enumerable.Empty<SelectListItem>(), "Şehir Seçiniz", new { @class = "form-control", @id = "ddlDistricts" })
+                @Html.ValidationMessageFor(model => model.DISTRICT_ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tesis Adresi :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.FACILITY_ADDRESS, new { @class = "form-control", placeholder = "Tesis adresi giriniz", @style = "resize: vertical;" })
+                @Html.ValidationMessageFor(model => model.FACILITY_ADDRESS, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Facilities")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<link href="~/css/basic.css" rel="stylesheet" />
+<link href="~/css/dropzone.css" rel="stylesheet" />
+<link href="~/css/style.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/facility.js"></script>
+<script src="~/js/dropzone.js"></script>
+<script src="~/js/layout.js"></script>

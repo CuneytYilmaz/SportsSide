@@ -1,0 +1,134 @@
+﻿@model sahakirala.Models.ReservationBigModel
+@{
+    ViewBag.Title = "SportsSide - " + Model.Facility.FACILITY_NAME;
+    Layout = "~/Views/Shared/_RezervasyonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        @Html.HiddenFor(model => model.Facility.FACILITY_ID, new { @id = "hdnFacility" })
+        @Html.Hidden("hdnDate", DateTime.Now.ToShortDateString(), new { @id = "hdnDate" })
+        @* Slider *@
+        @if (Model.FacilityPictures.Count() > 0)
+        {
+            <div id="carousel-example-generic" class="carousel slide slider" data-ride="carousel">
+                <!-- Indicators -->
+                <ol class="carousel-indicators">
+                    @{int key = 0;
+                        foreach (var pictures in Model.FacilityPictures)
+                        {
+                            if (pictures.FP_PICTURE == "/img/FacilityPictures/no-photo.gif")
+                            {
+                                @Html.Hidden("hdnNoPhoto", true, new { @id = "hdnNoPhoto" })
+                            }
+                            <li data-target="#carousel-example-generic" data-slide-to="@key"></li>
+                            key++;
+                        }
+                    }
+                </ol>
+
+                <!-- Wrapper for slides -->
+                <div class="carousel-inner" role="listbox">
+                    @foreach (var pictures in Model.FacilityPictures)
+                    {
+                        <div class="item" id="sliderItem">
+                            <img id="sliderPhoto" src="@pictures.FP_PICTURE">
+                            <div class="carousel-caption">
+                                @pictures.FACILITY.FACILITY_NAME
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <!-- Controls -->
+                @if (Model.FacilityPictures.Count() > 1)
+                {
+                    <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                }
+            </div>
+        }
+
+        @* Tesis Bilgileri *@
+        <div class="panel panel-success" style="margin-top:15px;">
+            <div class="panel-heading">
+                <h3 class="panel-title">Tesis Bilgileri</h3>
+            </div>
+            <div class="panel-body">
+                <div class="col-md-6">
+                    <dl class="dl-horizontal">
+                        <dt><span class="label" id="myLabel">Tesis Adı :</span></dt>
+                        <dd>@Model.Facility.FACILITY_NAME</dd>
+                        <dt><span class="label" id="myLabel">Tesis içeriği :</span></dt>
+                        <dd>@Model.Facility.FACILITY_CONTENT</dd>
+                        <dt><span class="label" id="myLabel">Tesis Kapasitesi :</span></dt>
+                        <dd>@Model.Facility.FACILITY_CAPACITY</dd>
+                    </dl>
+                </div>
+                <div class="col-md-6">
+                    <dl class="dl-horizontal">
+                        <dt><span class="label" id="myLabel">Rezervasyon Fiyatı :</span></dt>
+                        <dd>@Model.Facility.FACILITY_PRICE TL</dd>
+                        <dt><span class="label" id="myLabel">Tesis Adresi :</span></dt>
+                        <dd>@Model.Facility.FACILITY_ADDRESS</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        @* Rezervasyon Arama *@
+
+        <div class="col-md-11" id="searchPanel">
+            <div class="form-group">
+                <label for="datePicker" class="col-md-2 control-label" id="lblDate">Tarih Seçiniz : </label>
+                <div id="datePlace" class="input-group date form_date col-md-4" data-date="" data-date-format="dd.mm.yyyy" data-link-field="datePicker" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" id="dateField" size="16" type="text" value="@DateTime.Now.ToShortDateString()" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-calendar" id="iconCalendar"></span></span>
+                </div>
+
+                <button type="button" class="btn btn-success" id="btnSearch">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Rezervasyon Ara
+                </button>
+
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-target="#myModal" id="btnSubscribe">
+                    <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Abone Ol
+                </button>
+
+                <input type="hidden" id="datePicker" value="" />
+                <br />
+            </div>
+        </div>
+
+        @* Rezervasyon Bilgileri *@
+        <div class="col-md-12" style="padding:0px;">
+            <div class="col-md-8" style="padding:0px;" id="partialArea">
+                @Html.Partial("_PartialReservation")
+            </div>
+            @* Rezervasyon Özeti *@
+            <div class="col-md-4" style="padding-right:0px;" id="partialSummary">
+                @Html.Partial("_PartialReservationSummary")
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div id="partialSubscribe">
+    @Html.Partial("_PartialSubscribe")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js" charset="UTF-8"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/scripts/bootstrap.min.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.tr.js" charset="UTF-8"></script>
+<script src="~/js/reservation.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/reservation.css" />
+<link rel="stylesheet" type="text/css" href="~/css/bootstrap-datetimepicker.min.css" />

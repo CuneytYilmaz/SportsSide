@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SportsSide.DAL.SLIDER>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div id="overlay"></div>
+<div id="frame">
+    <img id="main" src="" alt="" />
+</div>
+
+<h2>Slider Bilgileri</h2>
+
+<p>
+    <input type="button" value="Yeni Oluştur" class="btn btn-success" onclick="location.href='@Url.Action("Create", "Sliders")'" />
+</p>
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Slider Bilgileri
+    </div>
+    <div class="panel-body">
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Slider Açıklaması
+                    </th>
+                    <th>
+                        Slider Fotoğrafı
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SLIDER_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SLIDER_DESCRIPTION)
+                        </td>
+                        <td style="width:250px;">
+                            <button type="button" class="btn btn-warning btn-sm" id="@item.SLIDER_PICTURE" value="@item.SLIDER_ID">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Görüntüle
+                            </button>
+                            @*<img id="1" src="@item.FT_PICTURE" alt="img" />*@
+                            @*@Html.DisplayFor(modelItem => item.FT_PICTURE)*@
+                        </td>
+                        <td>
+                            <input type="button" value="Düzenle" class="btn btn-info btn-sm" onclick="location.href='@Url.Action("Edit", "Sliders", new { id = item.SLIDER_ID})'" />
+                            <input type="button" value="Sil" class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("Delete", "Sliders", new { id = item.SLIDER_ID})'" />
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/slider.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

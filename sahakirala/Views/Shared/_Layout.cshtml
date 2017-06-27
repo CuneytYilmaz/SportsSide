@@ -1,0 +1,167 @@
+﻿@model Database.USER
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/idangerous.swiper.css" rel="stylesheet" type="text/css">
+    <link href="~/css/devices.min.css" rel="stylesheet" type="text/css">
+    <link href="~/css/style.css" rel="stylesheet" type="text/css">
+    <link href="~/css/animate.css" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="~/img/favicon.ico">
+    <title>SportsSide - 30 Saniyede Saha Kirala!</title>
+    <style type="text/css">
+        .gm-style .gm-style-mtc label, .gm-style .gm-style-mtc div {
+            font-weight: 400;
+        }
+    </style>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+    <style type="text/css">
+        .gm-style .gm-style-cc span, .gm-style .gm-style-cc a, .gm-style .gm-style-mtc div {
+            font-size: 10px;
+        }
+    </style>
+
+    <style type="text/css">
+        .gm-style {
+            font: 400 11px Roboto, Arial, sans-serif;
+            text-decoration: none;
+        }
+
+            .gm-style img {
+                max-width: none;
+            }
+    </style>
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    @*<script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/common.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/util.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/stats.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/map.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/marker.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/onion.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/controls.js"></script>
+        <script type="text/javascript" charset="UTF-8" src="http://maps.googleapis.com/maps-api-v3/api/js/28/3/infowindow.js"></script>*@
+    <script src="~/js/jquery-2.1.3.min.js"></script>
+    <script src="~/js/bootstrap.min.js"></script>
+    <script src="~/js/idangerous.swiper.min.js"></script>
+    <script src="~/js/global.js"></script>
+
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;language=en"></script>
+    <script src="~/js/map.js"></script>
+
+    <script src="~/js/wow.min.js"></script>
+    <script src="~/js/subscription.js"></script>
+
+    <script src="~/Scripts/mayki.js"></script>
+    
+    <style>
+        .carousel-inner > .item > img,
+        .carousel-inner > .item > a > img {
+            width: 70%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body data-theme="theme-3">
+
+    <header class="">
+        <a href="#" id="logo"><img src="~/img/theme-3/30.png" alt=""><img class="act" src="~/img/theme-3/32.png" alt=""></a>
+        <div class="mob-icon">
+            <span></span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home" class="scroll-to-link act">GİRİŞ</a></li>
+                <li><a href="#about" class="scroll-to-link">NEDEN</a></li>
+                <li><a href="#why" class="scroll-to-link">NASIL</a></li>
+                <li><a href="#benefits" class="scroll-to-link">ARTILAR</a></li>
+                <li><a href="#how-it-work" class="scroll-to-link">SİSTEM</a></li>
+                <li><a href="#contact" class="scroll-to-link">İLETİŞİM</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div id="loader-wrapper">
+        <img src="~/img/theme-3/30.png" alt="">
+        <span></span>
+    </div>
+
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+
+    <style>
+        .site-footer h3{
+            font-size:18px;
+        }
+        .ulSayfa li{
+            list-style:none !important;
+        }
+        .footerChapter{
+            margin-top:10px;
+            margin-left:0px;
+        }
+        .footerChapter a{
+            color:#ccc;
+        }
+        .footerChapter a:hover{
+            text-decoration:none;
+            color:#ccc;
+        }
+    </style>
+    <!-- FOOTER -->
+    <footer class="site-footer">
+        <div class="bottom-footer" style="padding:50px;">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>SportsSide Hakkında</h3>
+                        <p class="footerChapter">
+                            <i class="fa fa-chevron-right" style="margin-right:5px;" aria-hidden="true"></i>SportsSide, online spor tesisi kiralama sistemidir.
+                        </p>
+                        <p class="footerChapter">
+                            <i class="fa fa-chevron-right" style="margin-right:5px;" aria-hidden="true"></i>Rezervasyon yapabilir, yakındaki veya Türkiyenin herhangi bir yerinde sahayı bulabilirsiniz.
+                        </p>
+                    </div>
+                    <div class="col-md-5 col-md-offset-1">
+                        <h3>İletişim</h3>
+                        <div class="row footerChapter">
+                            <a class="contact-link"><i class="fa fa-map-marker" style="margin-right:5px;"></i> Eski Büyükdere Cad. Yamaç Sk. No: 6/4, 4. Serdivan / Sakarya</a>
+                        </div>
+                        <div class="row footerChapter">
+                            <a class="contact-link"><i class="fa fa-phone" style="margin-right:5px;"></i> +90 (212) 269 70 87</a>
+                        </div>
+                        <div class="row footerChapter">
+                            <a class="contact-link"><i class="fa fa-fax" style="margin-right:5px;"></i> +90 (212) 269 16 22</a>
+                        </div>        
+                        <div class="row footerChapter">
+                            <a class="contact-link"><i class="fa fa-envelope" style="margin-right:5px;"></i> info@sportsside.net</a>
+                        </div>    
+                                               
+                    </div>
+                    <div class="col-md-2">
+                        <h3>Sayfalar</h3>
+                        <div class="row footerChapter">
+                            <a href="/Home/Index"><i class="fa fa-globe" style="margin-right:7px;" aria-hidden="true"></i>Ana Sayfa</a>
+                        </div>
+                        <div class="row footerChapter">
+                            <a href="/Arama/Index"><i class="fa fa-search" style="margin-right:5px;" aria-hidden="true"></i>Tesis Arama</a>
+                        </div>        
+                        <div class="row footerChapter">
+                            <a href="/Member/Index"><i class="fa fa-user" style="margin-right:8px;" aria-hidden="true"></i>Kullanıcı Bilgi</a>
+                        </div>       
+                                
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+</body>
+</html>
+

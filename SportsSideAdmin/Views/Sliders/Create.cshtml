@@ -1,0 +1,54 @@
+﻿@model SportsSide.DAL.SLIDER
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Slider Oluştur</h2>
+
+@using (Html.BeginForm("Create", "Sliders", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+            </div>
+        }
+        <div class="form-group">
+            @Html.Label("Slider Açıklaması :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="sliderName" name="sliderName" placeholder="Slider açıklaması giriniz" class="form-control" maxlength="400" />
+                <span class="text-danger field-validation-error" id="validateSliderName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Slider Fotoğrafı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="file" name="file" value="Gözat" class="btn btn-warning" id="btnFile" />
+                <span class="text-danger field-validation-error" id="validateSliderPicture"></span>
+                @*@Html.ValidationMessageFor(model => model.SLIDER_PICTURE, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" id="btnSubmit" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Sliders")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/slider.js"></script>

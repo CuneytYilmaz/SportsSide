@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SportsSide Admin Paneli</title>
+    <!-- Bootstrap Styles-->
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet" />
+    <!-- FontAwesome Styles-->
+    <link href="~/assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!-- Morris Chart Styles-->
+    <link href="~/assets/js/morris/morris-0.4.3.min.css" rel="stylesheet" />
+    <!-- Custom Styles-->
+    <link href="~/assets/css/custom-styles.css" rel="stylesheet" />
+    <!-- Google Fonts-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link rel="shortcut icon" href="~/img/favicon.ico">
+
+</head>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar navbar-default top-navbar" role="navigation">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="@Url.Content("/Dashboard/Index/")"><i class="fa fa-gear"></i> <strong>SportsSide</strong></a>
+            </div>
+
+            <ul class="nav navbar-top-links navbar-right">
+                <li style="color:#ffffff; font-size:larger;">
+                    @{
+                        if (HttpContext.Current.Session["userName"] != null)
+                        {
+                            @: Hoşgeldin @HttpContext.Current.Session["userName"].ToString()
+                            @Html.Hidden("isLoggedin", true);
+                        }
+                        else
+                        {
+                            @Html.Hidden("isLoggedin", false);
+                            @Html.Hidden("urlLogin", @Url.Action("Login", "Account"));
+                        }
+                    }
+
+                </li>
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-alerts">
+                        <li>
+                            <a href="@Url.Action("Index", "Approve", new { selectedTab = 1 })">
+                                <div>
+                                    <i class="fa fa-check-square-o"></i> Bekleyen Rezervasyonlar
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Action("Index", "Approve", new { selectedTab = 2 })">
+                                <div>
+                                    <i class="fa fa-check-square-o"></i> Bekleyen Abonelikler
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Action("Index", "Approve", new { selectedTab = 4 })">
+                                <div>
+                                    <i class="fa fa-tasks fa-fw"></i> Tüm Rezervasyonlar
+                                </div>
+                            </a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Action("Index", "Approve", new { selectedTab = 3 })">
+                                <div>
+                                    <i class="fa fa-tasks fa-fw"></i> Tüm Abonelikler
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-alerts -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li>
+                            <a href="http://localhost:30471/Member/Index"><i class="fa fa-user fa-fw"></i> Kullanıcı Profili</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Content("/Dashboard/Index/")"><i class="fa fa-cog fa-spin"></i> Anasayfa</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li>
+                            <a href="@Url.Content("/Account/Logout/")"><i class="fa fa-sign-out fa-fw"></i> Çıkış Yap</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+        </nav>
+        <!--/. NAV TOP  -->
+        <nav class="navbar-default navbar-side" role="navigation">
+            <div id="sideNav" href=""><i class="fa fa-caret-right"></i></div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="main-menu">
+                    @{
+                        if (HttpContext.Current.Session["userName"] != null)
+                        {
+                            string role = HttpContext.Current.Session["role"].ToString();
+                            if (role == "A" || role == "O")
+                            {
+                                <li>
+                                    <a href="@Url.Content("/Dashboard/Index/")"><i class="fa fa-dashboard"></i> Anasayfa</a>
+                                </li>
+                            }
+                            if (role == "O")
+                            {
+                                <li>
+                                    <a href="@Url.Content("/Areas/Index/")"><i class="fa fa-globe"></i> Bölgeler</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("/Cities/Index/")"><i class="fa fa-globe"></i> Şehirler</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("/Districts/Index/")"><i class="fa fa-globe"></i> İlçeler</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("/FacilityTypes/Index/")"><i class="fa fa-tags"></i> Tesis Türü</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("/Announcements/Index/")"><i class="fa fa-bullhorn"></i> Duyurular</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("/Permission/Index/")"><i class="fa fa-sitemap"></i> Yetkilendirme</a>
+                                </li>
+                                @*<li>
+                                        <a href="@Url.Content("/Sliders/Index/")"><i class="fa fa-table"></i> Slider Bilgileri</a>
+                                    </li>
+                                *@
+                            }
+                            if (role == "A" || role == "O")
+                            {
+                                <li>
+                                    <a href="@Url.Content("/Facilities/Index/")"><i class="fa fa-plus-square"></i> Tesisler</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Content("/Approve/Index/")"><i class="fa fa-check-square"></i> Onaylar / Tüm Kayıtlar</a>
+                                </li>
+                            }
+                        }
+                    }
+                </ul>
+
+            </div>
+
+        </nav>
+        <!-- /. NAV SIDE  -->
+        <div id="page-wrapper">
+            <div id="page-inner">
+                @RenderBody()
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+    </div>
+    <!-- /. WRAPPER  -->
+    <!-- JS Scripts-->
+    <!-- jQuery Js -->
+    <script src="~/assets/js/jquery-1.10.2.js"></script>
+    <!-- Bootstrap Js -->
+    <script src="~/assets/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Js -->
+    <script src="~/assets/js/jquery.metisMenu.js"></script>
+    <!-- Morris Chart Js -->
+    <script src="~/assets/js/morris/raphael-2.1.0.min.js"></script>
+    <script src="~/assets/js/morris/morris.js"></script>
+
+
+    <script src="~/assets/js/easypiechart.js"></script>
+    <script src="~/assets/js/easypiechart-data.js"></script>
+
+    <script src="~/assets/js/Lightweight-Chart/jquery.chart.js"></script>
+
+    <!-- Custom Js -->
+    @*<script src="~/assets/js/custom-scripts.js"></script>*@
+    @*<script src="~/js/layout.js"></script>*@
+
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+﻿@model PagedList.IPagedList<SportsSide.DAL.USERS>
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Yetki İşlemleri</h2>
+<hr />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Yetki İşlemleri
+    </div>
+    <div class="panel-body">
+        @using (Html.BeginForm("Index", "Permission", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        @Html.Editor("userName", new { htmlAttributes = new { @class = "form-control", placeholder = "Kullanıcı adı giriniz" } })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.Editor("userFirstName", new { htmlAttributes = new { @class = "form-control", placeholder = "Kullanıcı ismi giriniz" } })
+                    </div>
+                    <div class="col-md-3">
+                        @Html.Editor("userSurname", new { htmlAttributes = new { @class = "form-control", placeholder = "Kullanıcı soyismi giriniz" } })
+                    </div>
+                    <div class="col-md-3">
+                        <input type="submit" value="Ara" class="btn btn-success" style="width:150px; margin-left:10px;" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        <div class="table-responsive">
+            <table class="table table-hover table-bordered">
+                <tr>
+                    <th>
+                        #
+                    </th>
+                    <th>
+                        Kullanıcı Adı
+                    </th>
+                    <th>
+                        İsim
+                    </th>
+                    <th>
+                        Soyisim
+                    </th>
+                    <th>
+                        E-mail
+                    </th>
+                    <th>
+                        Telefon Numarası
+                    </th>
+                    <th>
+                        Kullanıcı Tipi
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.USER_ID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.USER_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.USER_FIRST_NAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.USER_SURNAME)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.USER_MAIL)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.USER_GSM)
+                        </td>
+                        <td>
+                            @{
+                                if (item.USER_TYPE.ToString() == "A")
+                                {
+                                    @: Tesis Sahibi
+                                }
+                                else if (item.USER_TYPE.ToString() == "U")
+                                {
+                                    @: Kullanıcı
+                                }
+                                else
+                                {
+                                    @:Uygulama Sahibi
+                                }
+                            }
+                        </td>
+                        <td>
+                            @{
+                                if (item.USER_TYPE.ToString() == "O")
+                                {
+                                    <input type="button" value="Yetki Ver" class="btn btn-success btn-sm btnGivePerm" id="@item.USER_ID" disabled />
+                                    <input type="button" value="Yetki Al" class="btn btn-danger btn-sm btnTakePerm" id="@item.USER_ID" disabled />
+                                }
+                                else if (item.USER_TYPE.ToString() == "A")
+                                {
+                                    <input type="button" value="Yetki Ver" class="btn btn-success btn-sm btnGivePerm" id="@item.USER_ID" disabled />
+                                    <input type="button" value="Yetki Al" class="btn btn-danger btn-sm btnTakePerm" id="@item.USER_ID" />
+                                }
+                                else
+                                {
+                                    <input type="button" value="Yetki Ver" class="btn btn-success btn-sm btnGivePerm" id="@item.USER_ID" />
+                                    <input type="button" value="Yetki Al" class="btn btn-danger btn-sm btnTakePerm" id="@item.USER_ID" disabled />
+                                }
+                            }
+                        </td>
+                    </tr>
+                                }
+            </table>
+            <!-- Pager -->
+            <ul class="pager">
+                <li class="next">
+
+                    @*Sayfalandırma kodu*@
+                    <br /> Sayfa @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
+                    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">İşlem Sonucu</h4>
+            </div>
+            <div class="modal-body">
+                <div id="mdResult">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success resultOK" id="@Url.Action("Index", "Permission")">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/js/bootbox.js"></script>
+<script src="~/js/permission.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

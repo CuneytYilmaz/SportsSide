@@ -1,0 +1,350 @@
+﻿@model SportsSideAdmin.Models.DashboardModel
+@using PagedList.Mvc;
+
+<div class="row">
+    <div class="col-md-12">
+        <h1 class="page-header">
+            Anasayfa <small>Admin Paneli</small>
+        </h1>
+    </div>
+</div>
+
+<!-- /. ROW  -->
+
+<div class="row">
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="panel panel-primary text-center no-boder bg-color-green green">
+            <div class="panel-left pull-left green">
+                <i class="fa fa-futbol-o fa-5x"></i>
+
+            </div>
+            <div class="panel-right">
+                <h3>@Model.countFacility</h3>
+                <strong>Toplam Tesis Sayısı</strong>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="panel panel-primary text-center no-boder bg-color-blue">
+            <div class="panel-left pull-left blue">
+                <i class="fa fa-handshake-o fa-5x"></i>
+            </div>
+
+            <div class="panel-right">
+                <h3>@Model.countApprovedReservation</h3>
+                <strong>Onaylanmış Rezervasyon Sayısı</strong>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="panel panel-primary text-center no-boder bg-color-red">
+            <div class="panel-left pull-left red">
+                <i class="fa fa fa-rss fa-5x"></i>
+
+            </div>
+            <div class="panel-right">
+                <h3>@Model.countSubscriber</h3>
+                <strong>Güncel Abone Sayısı</strong>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 col-sm-12 col-xs-12">
+        <div class="panel panel-primary text-center no-boder bg-color-brown">
+            <div class="panel-left pull-left brown">
+                <i class="fa fa-users fa-5x"></i>
+
+            </div>
+            <div class="panel-right">
+                <h3>@Model.countVisitor</h3>
+                <strong>Tesise Gelen Toplam Kişi Sayısı</strong>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Tesisin Doluluk Oranı</h4>
+                <div class="easypiechart" id="easypiechart-blue" data-percent="@Model.percentFacility" style="margin: 65px auto 19px auto !important;">
+                    <span class="percent">@Model.percentFacility%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Rezervasyonların Onaylanma Yüzdesi</h4>
+                <div class="easypiechart" id="easypiechart-orange" data-percent="@Model.percentReservation">
+                    <span class="percent">@Model.percentReservation%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Aboneliklerin Onaylanma Yüzdesi</h4>
+                <div class="easypiechart" id="easypiechart-red" data-percent="@Model.percentSubscriber">
+                    <span class="percent">@Model.percentSubscriber%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-3">
+        <div class="panel panel-default">
+            <div class="panel-body easypiechart-panel">
+                <h4>Bugün</h4>
+                <div id="morris-donut-chart"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Aylara Göre Rezervasyon - Abonelik Dağılımı
+            </div>
+            <div class="panel-body">
+                <div id="morris-area-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Günlere Göre Rezervasyon - Abonelik Dağılımı
+            </div>
+            <div class="panel-body">
+                <div id="morris-line-chart"></div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--/.row-->
+
+<div class="row">
+    <div class="col-md-12">
+
+    </div>
+</div>
+<!-- /. ROW  -->
+
+<div class="row">
+    <div class="col-md-12 col-sm-12 col-xs-12">
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Tüm Tesisler
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Tesis Adı</th>
+                                <th>Tesis İçeriği</th>
+                                <th>Tesis Türü</th>
+                                <th>Kapasite</th>
+                                <th>Fiyat</th>
+                                <th>İlçe</th>
+                                <th>İl</th>
+                                <th>Bölge</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model.Facilities)
+                            {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY_CONTENT)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY_TYPE1.FT_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY_CAPACITY) Kişi
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY_PRICE) TL
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DISTRICT.DISTRICT_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DISTRICT.CITY.CITY_NAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DISTRICT.CITY.AREA.AREA_NAME)
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <li class="next" id="displayPager">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.Facilities.PageCount < Model.Facilities.PageNumber ? 0 : Model.Facilities.PageNumber) / @Model.Facilities.PageCount
+                            @Html.PagedListPager(Model.Facilities, page => Url.Action("Index", new { page }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- /. ROW  -->
+
+
+<footer>
+    <p>©2017 Tüm hakları saklıdır. <a href="http://sportsside.net">SportsSide</a></p>
+</footer>
+
+<link rel="stylesheet" type="text/css" href="~/css/dashboard.css" />
+<!-- jQuery Js -->
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<!-- Bootstrap Js -->
+<script src="~/assets/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script src="~/assets/js/jquery.metisMenu.js"></script>
+<!-- Morris Chart Js -->
+<script src="~/assets/js/morris/raphael-2.1.0.min.js"></script>
+<script src="~/assets/js/morris/morris.js"></script>
+
+<script src="~/assets/js/Lightweight-Chart/jquery.chart.js"></script>
+<script src="~/js/layout.js"></script>
+
+<script>
+    (function ($) {
+        "use strict";
+        var mainApp = {
+
+            initFunction: function () {
+                /*MENU
+                ------------------------------------*/
+                $('#main-menu').metisMenu();
+
+                $(window).bind("load resize", function () {
+                    if ($(this).width() < 768) {
+                        $('div.sidebar-collapse').addClass('collapse')
+                    } else {
+                        $('div.sidebar-collapse').removeClass('collapse')
+                    }
+                });
+
+                /* MORRIS DONUT CHART
+                ----------------------------------------*/
+                Morris.Donut({
+                    element: 'morris-donut-chart',
+                    data: [{
+                        label: "Rezervasyon İsteği",
+                        value: @Model.todayReservation
+                        }, {
+                            label: "Abonelik İsteği",
+                            value: @Model.todaySubscriber
+                            }],
+                    colors: [
+                    '#24C2CE',
+                    '#A6A6A6'
+                    ],
+                    resize: true
+                });
+
+                /* MORRIS AREA CHART
+                ----------------------------------------*/
+
+                Morris.Area({
+                    element: 'morris-area-chart',
+                    data: [
+                        @foreach (var item in Model.GroupByMonths)
+                        {
+                            @: {
+                                 @:month: '@item.MonthName',
+                                 @:reservation: @item.CountReservation,
+                                 @:subscriber: @item.CountSubscriber
+                            @: },
+                        }],
+                    xkey: 'month',
+                    ykeys: ['reservation', 'subscriber'],
+                    labels: ['Rezervasyon', 'Abonelik'],
+                    pointSize: 2,
+                    hideHover: 'auto',
+                    pointFillColors:['#ffffff'],
+                    pointStrokeColors: ['black'],
+                    lineColors:['#A6A6A6','#24C2CE'],
+                    resize: true,
+                    parseTime: false
+                });
+
+                /* MORRIS LINE CHART
+                ----------------------------------------*/
+                Morris.Line({
+                    element: 'morris-line-chart',
+                    data: [
+                        @foreach (var item in Model.GroupByDays)
+                        {
+                            @: {
+                                @:day: '@item.DayName',
+                                @:reservation: @item.CountReservation,
+                                @:subscriber: @item.CountSubscriber
+                            @: },
+                        }
+                    ],
+                    xkey: 'day',
+                    ykeys: ['reservation', 'subscriber'],
+                    labels: ['Rezervasyon', 'Abonelik'],
+                    fillOpacity: 0.6,
+                    hideHover: 'auto',
+                    behaveLikeLine: true,
+                    resize: true,
+                    pointFillColors: ['#ffffff'],
+                    pointStrokeColors: ['black'],
+                    lineColors: ['gray', '#24C2CE'],
+                    parseTime: false
+                });
+
+
+                $('.bar-chart').cssCharts({ type: "bar" });
+                $('.donut-chart').cssCharts({ type: "donut" }).trigger('show-donut-chart');
+                $('.line-chart').cssCharts({ type: "line" });
+
+                $('.pie-thychart').cssCharts({ type: "pie" });
+
+
+            },
+
+            initialization: function () {
+                mainApp.initFunction();
+
+            }
+
+        }
+        // Initializing ///
+
+        $(document).ready(function () {
+            mainApp.initFunction();
+        });
+
+    }(jQuery));
+</script>

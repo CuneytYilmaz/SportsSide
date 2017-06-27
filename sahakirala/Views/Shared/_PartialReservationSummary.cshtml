@@ -1,0 +1,121 @@
+﻿@model sahakirala.Models.ReservationBigModel
+
+<div class="panel panel-success">
+    <div class="panel-heading">
+        <h3 class="panel-title">Rezervasyon Özeti</h3>
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <dl class="dl-horizontal">
+                <dt><span class="label" id="myLabel">Tesis Adı :</span></dt>
+                <dd>@Model.Facility.FACILITY_NAME</dd>
+                <dt><span class="label" id="myLabel">Rezervasyon Fiyatı :</span></dt>
+                <dd>@Model.Facility.FACILITY_PRICE TL</dd>
+                <dt><span class="label" id="myLabel">Rezervasyon Tarihi :</span></dt>
+                <dd>@Model.Date.ToShortDateString()</dd>
+                <dt><span class="label" id="myLabel">Rezervasyon Saati :</span></dt>
+                <dd>@Model.Hour</dd>
+            </dl>
+
+            @Html.EditorFor(model => model.Count, new { htmlAttributes = new { @class = "form-control", placeholder = "Kişi sayısını giriniz", Value = "", @id = "txtCount" } })
+            <span class="text-danger field-validation-error" id="validateCount"></span>
+            @Html.HiddenFor(model => model.Date, new { @id = "hdnDate" })
+            @Html.HiddenFor(model => model.Hour, new { @id = "hdnTime" })
+            @Html.Hidden("hdnCapacity", Model.Facility.FACILITY_CAPACITY, new { @id = "hdnCapacity" })
+            @Html.Hidden("hdnFacilityId", Model.Facility.FACILITY_ID, new { @facilityId = "hdnFacilityId" })
+
+            <div class="col-md-offset-4">
+                <button type="button" class="btn btn-success btnApprove" style="width:130px; margin-top:5px;" id="@Url.Action("Index", "Member")">
+                    <span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Onayla
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/sweetalert.css">
+<script>
+    $(document).ready(function () {
+        $(".btnApprove").click(function () {
+            var capacity = $("#hdnCapacity").val();
+            var isValidate = true;
+            if ($("#txtCount").val() == null || $("#txtCount").val() == "") {
+                $("#validateCount").text("Lütfen kisi sayisi giriniz.")
+                isValidate = false;
+            }
+            else if (parseInt($("#txtCount").val()) > parseInt(capacity)) {
+                $("#validateCount").text("En fazla tesis kapasitesi kadar kisi sayisi girilebilir.")
+                isValidate = false;
+            }
+            else if (parseInt($("#txtCount").val()) <= 0) {
+                $("#validateCount").text("Kişi sayısı minimum 1 olabilir.")
+                isValidate = false;
+            }
+
+            if (isValidate == false) {
+                return false;
+            }
+
+            swal({
+                title: "Emin misiniz?",
+                text: "Rezervasyonu tamamlamak istediğinize emin misiniz?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Evet!",
+                confirmButtonColor: "#449d44",
+                cancelButtonText: "Hayır"
+            },
+            function (isConfirm) {
+                if (isConfirm == false) {
+                    swal("İptal edildi", "Rezervasyondan vazgeçildi!", "error");
+                }
+                else {
+                    var paramFacilityId = $("#hdnFacilityId").val();
+                    var paramDate = $("#hdnDate").val();
+                    var paramHour = $("#hdnTime").val();
+                    var paramCount = $("#txtCount").val();
+
+                    $.ajax(
+                        {
+                            type: "POST",
+                            url: "/Reservation/Create",
+                            data: { facilityId: paramFacilityId, date: paramDate, hour: paramHour, count: paramCount },
+                            success: function (data) {
+                                if (data) {
+                                    setTimeout(function () {
+                                        swal({
+                                            title: "İşlem tamam!",
+                                            text: "Rezervasyonun başarıyla tamamlandı!",
+                                            type: "success",
+                                            showCancelButton: false,
+                                            closeOnConfirm: false,
+                                            showLoaderOnConfirm: true,
+                                            confirmButtonText: "Tamam",
+                                            confirmButtonColor: "#449d44"
+                                        }, function () {
+                                            var url = $(".btnApprove").attr("id");
+                                            window.location.href = url;
+                                        });
+                                    },0);
+                                }
+                                else {
+                                    swal("Oops", "Rezervasyon tamamlanırken bir sorun oluştu!", "error");
+                                }
+                            }
+                        })
+                    .done(function (data) {
+                        swal("İşlem tamam!", "Rezervasyonun başarıyla tamamlandı!", "success");
+                    })
+                    .error(function (data) {
+                        swal("Oops", "Rezervasyon tamamlanırken bir sorun oluştu!", "error");
+                    });
+                }
+            });
+        });
+    });
+</script>

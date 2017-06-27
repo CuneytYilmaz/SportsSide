@@ -1,0 +1,131 @@
+﻿@model sahakirala.Models.MemberBigModel
+@{
+    ViewBag.Title = "SportsSide - İletişim";
+    Layout = "~/Views/Shared/_RezervasyonLayout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-2"> </div>
+        <div class="col-md-8">
+            <h1>İLETİŞİM</h1>
+            <p class="lead">Daha fazla müşteriye ulaşmak için bizimle iletişime geçin.</p>
+
+            <p>Bir mail uzaklığındayız.</p> <br>
+
+            <div class="panel panel-default well">
+                <div class="panel-body">
+                   <form action="" class="form-horizontal track-event-form bv-form" data-goaltype="”General”" data-formname="”ContactUs”" id="contact-us-all" novalidate="novalidate" data-toggle="validator">
+                        <input name="elqSiteId" type="hidden" value="928">
+                        <input name="sFDCLastCampaignID" type="hidden" value="701400000012Lql">
+                        <input name="elqFormName" type="hidden" value="EMEAAllContactUsSubmissions">
+                        <input name="nexturl" type="hidden" value="">
+                        <input name="Partner" type="hidden" value="">
+                        <input name="language" type="hidden" value="en">
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <input type="text" class="form-control" id="isim" placeholder="isminizi yazınız" name="C_isim" data-bv-field="C_FirstName">
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-user"></i>
+                                    </div>
+                                    <input type="text" class="form-control" id="soyad" placeholder="soyisiminizi yazınız" name="C_soyad" data-bv-field="C_LastName">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-envelope"></i>
+                                    </div>
+                                    @*<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="mailinizi giriniz">*@                 
+                                    @Html.TextBoxFor(model => model.User.USER_MAIL, new { @class = "form-control", placeholder = "E-Mailinizi Giriniz", @id = "email" })
+                                    @Html.ValidationMessageFor(model => model.User.USER_MAIL, "", new { @class = "text-danger", @style = "margin-left:10px;", @id = "hata" })
+                                 @*<input type="email" class="form-control" id="email" placeholder="mailinizi giriniz" name="email" data-bv-field="C_EmailAddress">*@
+                                </div>
+                            </div>                            
+                            <div class="col-sm-6">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-phone"></i>
+                                    </div>
+                                    @*<input class="form-control" type="tel" value="1-(555)-555-5555" id="tel">*@
+                                    <input type="tel" class="form-control" id="tel" placeholder="telefon numaranızı giriniz" name="telefon numaranızı giriniz">
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-comment fa-2"></i>
+                                    </div>
+                                    <textarea class="form-control" name="mesaj" id="mesaj" rows="5" style="width:99.9%" placeholder="Mesajınızı giriniz"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-sm-12">
+                                <button id="gonder" type="submit" class="btn btn-default btn-success">Gönder</button>
+                            </div>
+                        </div>
+                        <input type="hidden" value="">
+                    </form>
+                </div><!-- end panel-body -->
+            </div><!-- end panel -->
+            <!-- END DOWNLOAD PANEL -->
+        </div><!-- end col-md-8 -->
+        <div class="col-md-2"> </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">HATA</h5>
+            </div>
+            <div class="modal-body">
+                E-Posta veya Mesaj bölümleri boş bırakılamaz
+            </div>
+            <div class="modal-footer">
+                @Html.ActionLink("Tekrar Gönder", "iletisim", "Home", new { @class = "btn btn-success" })
+               
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">BİGİ</h5>
+            </div>
+            <div class="modal-body">
+                Mailiniz başarılı bir şekilde gönderilmiştir.
+            </div>
+            <div class="modal-footer">
+
+                <button type="button" class="btn btn-success" data-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

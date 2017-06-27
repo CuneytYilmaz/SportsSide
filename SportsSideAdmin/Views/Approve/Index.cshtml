@@ -1,0 +1,677 @@
+﻿@model SportsSideAdmin.Models.ApproveModel
+@using PagedList.Mvc;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Onay / Red İşlemleri ve Tüm Kayıtlar</h2>
+<hr />
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Onay / Red İşlemleri ve Tüm Kayıtlar
+    </div>
+    <div class="panel-body">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" role="tablist" id="myTabs">
+            <li role="presentation" class="dropdown active approveTabs">
+                <a href="#" class="dropdown-toggle" id="approveTabDrop" data-toggle="dropdown" aria-controls="myTabDrop1-contents" aria-expanded="false">Onay/Red <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="myTabDrop1" id="myTabDrop1-contents">
+                    <li class="active">
+                        <a href="#reservationApprove" role="tab" id="tabReservationApprove" aria-controls="dropdown1" aria-expanded="true">Rezervasyon</a>
+                    </li>
+                    <li>
+                        <a href="#subscriberApprove" role="tab" id="tabSubscriberApprove" aria-controls="dropdown2" aria-expanded="false">Abonelik</a>
+                    </li>
+                </ul>
+            </li>
+
+            <li role="presentation" class="dropdown approveTabs">
+                <a href="#" class="dropdown-toggle" id="recordsTabDrop" data-toggle="dropdown" aria-controls="myTabDrop2-contents" aria-expanded="false">Tüm Kayıtlar <span class="caret"></span></a>
+                <ul class="dropdown-menu" aria-labelledby="myTabDrop2" id="myTabDrop2-contents">
+                    <li>
+                        <a href="#allReservations" role="tab" id="tabAllReservations" aria-controls="dropdown3" aria-expanded="false">Tüm Rezervasyonlar</a>
+                    </li>
+                    <li>
+                        <a href="#allSubscribers" role="tab" id="tabAllSubscribers" aria-controls="dropdown4" aria-expanded="false">Tüm Abonelikler</a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="reservationApprove" aria-labelledby="dropdown1-tab">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Ad Soyad
+                            </th>
+                            <th>
+                                Tesis Adı
+                            </th>
+                            <th>
+                                Başlangıç Tarihi
+                            </th>
+                            <th>
+                                Bitiş Tarihi
+                            </th>
+                            <th>
+                                Oluşturulma Tarihi
+                            </th>
+                            <th>
+                                Kişi Sayısı
+                            </th>
+                            <th>
+                                Olumlu
+                            </th>
+                            <th>
+                                Olumsuz
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.Reservations)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RESERVATION_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_FIRST_NAME) @Html.DisplayFor(modelItem => item.USERS.USER_SURNAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_BEGIN).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_END).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.CREATED_DATE).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.COUNT)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_POS) <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_NEG) <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                </td>
+                                <td>
+                                    <div class="hideextra">
+                                        <input type="button" value="Onayla" class="btn btn-success btn-sm btnApproveRes" id="@item.RESERVATION_ID" />
+                                        <input type="button" value="Red" class="btn btn-danger btn-sm btnRejectRes" id="@item.RESERVATION_ID" />
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.Reservations.PageCount < Model.Reservations.PageNumber ? 0 : Model.Reservations.PageNumber) / @Model.Reservations.PageCount
+                            @Html.PagedListPager(Model.Reservations, pageRes => Url.Action("Index", new { pageRes, selectedTab = 1 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="subscriberApprove" aria-labelledby="dropdown2-tab">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Ad Soyad
+                            </th>
+                            <th>
+                                Tesis Adı
+                            </th>
+                            <th>
+                                Gün
+                            </th>
+                            <th>
+                                Saat
+                            </th>
+                            <th>
+                                Olumlu
+                            </th>
+                            <th>
+                                Olumsuz
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.Subscribers)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SUBSCRIBER_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_FIRST_NAME) @Html.DisplayFor(modelItem => item.USERS.USER_SURNAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @{
+                                        string day = Html.DisplayFor(modelItem => item.WEEK_DAY).ToString();
+                                        switch (day)
+                                        {
+                                            case "Monday":
+                                                @: Pazartesi
+                                                break;
+                                            case "Tuesday":
+                                                @: Salı
+                                                break;
+                                            case "Wednesday":
+                                                @: Çarşamba
+                                                break;
+                                            case "Thursday":
+                                                @: Perşembe
+                                                break;
+                                            case "Friday":
+                                                @: Cuma
+                                                break;
+                                            case "Saturday":
+                                                @: Cumartesi
+                                                break;
+                                            case "Sunday":
+                                                @: Pazar
+                                                break;
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.S_TIME).ToString()).ToShortTimeString()
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_POS) <i class="fa fa-thumbs-o-up" aria-hidden="true"></i>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_NEG) <i class="fa fa-thumbs-o-down" aria-hidden="true"></i>
+                                </td>
+                                <td>
+                                    <div class="hideextra">
+                                        <input type="button" value="Onayla" class="btn btn-success btn-sm btnApproveSub" id="@item.SUBSCRIBER_ID" />
+                                        <input type="button" value="Red" class="btn btn-danger btn-sm btnRejectSub" id="@item.SUBSCRIBER_ID" />
+                                    </div>
+                                </td>
+                            </tr>
+                                        }
+                    </table>
+                    <!-- Pager -->
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.Subscribers.PageCount < Model.Subscribers.PageNumber ? 0 : Model.Subscribers.PageNumber) / @Model.Subscribers.PageCount
+                            @Html.PagedListPager(Model.Subscribers, pageSub => Url.Action("Index", new { pageSub, selectedTab = 2 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="allReservations" aria-labelledby="dropdown3-tab">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Ad Soyad
+                            </th>
+                            <th>
+                                Tesis Adı
+                            </th>
+                            <th>
+                                Başlangıç Tarihi
+                            </th>
+                            <th>
+                                Bitiş Tarihi
+                            </th>
+                            <th>
+                                Oluşturulma Tarihi
+                            </th>
+                            <th>
+                                Kişi Sayısı
+                            </th>
+                            <th>
+                                Durum
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.AllReservations)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.RESERVATION_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_FIRST_NAME) @Html.DisplayFor(modelItem => item.USERS.USER_SURNAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_BEGIN).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.DT_END).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.CREATED_DATE).ToString()).ToString("g")
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.COUNT)
+                                </td>
+                                <td>
+                                    @{
+                                        string status = Html.DisplayFor(modelItem => item.STATUS).ToString();
+                                        switch (status)
+                                        {
+                                            case "A":
+                                                @: Kabul Edildi
+                                                break;
+                                            case "P":
+                                                @: Beklemede
+                                                break;
+                                            case "R":
+                                                @: Red Edildi
+                                                break;
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <div class="hideextra">
+                                        @{
+                                            if (item.R_HISTORY != "1")
+                                            {
+                                                <input type="button" value="+" class="btn btn-success btn-sm btnPosRes" id="@item.RESERVATION_ID" />
+                                                <input type="button" value="-" class="btn btn-danger btn-sm btnNegRes" id="@item.RESERVATION_ID" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" value="+" class="btn btn-success btn-sm btnPosRes" id="@item.RESERVATION_ID" disabled/>
+                                                <input type="button" value="-" class="btn btn-danger btn-sm btnNegRes" id="@item.RESERVATION_ID" disabled/>
+                                            }
+                                        }
+
+                                    </div>
+                                </td>
+                            </tr>
+                                            }
+                    </table>
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.AllReservations.PageCount < Model.AllReservations.PageNumber ? 0 : Model.AllReservations.PageNumber) / @Model.AllReservations.PageCount
+                            @Html.PagedListPager(Model.AllReservations, pageAllRes => Url.Action("Index", new { pageAllRes, selectedTab = 4 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="allSubscribers" aria-labelledby="dropdown4-tab">
+                <div class="table-responsive">
+                    <table class="table table-hover table-bordered">
+                        <tr>
+                            <th>
+                                #
+                            </th>
+                            <th>
+                                Ad Soyad
+                            </th>
+                            <th>
+                                Tesis Adı
+                            </th>
+                            <th>
+                                Gün
+                            </th>
+                            <th>
+                                Saat
+                            </th>
+                            <th>
+                                Durum
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.AllSubscibers)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SUBSCRIBER_ID)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.USERS.USER_FIRST_NAME) @Html.DisplayFor(modelItem => item.USERS.USER_SURNAME)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.FACILITY.FACILITY_NAME)
+                                </td>
+                                <td>
+                                    @{
+                                        string day = Html.DisplayFor(modelItem => item.WEEK_DAY).ToString();
+                                        switch (day)
+                                        {
+                                            case "Monday":
+                                                @: Pazartesi
+                                                break;
+                                            case "Tuesday":
+                                                @: Salı
+                                                break;
+                                            case "Wednesday":
+                                                @: Çarşamba
+                                                break;
+                                            case "Thursday":
+                                                @: Perşembe
+                                                break;
+                                            case "Friday":
+                                                @: Cuma
+                                                break;
+                                            case "Saturday":
+                                                @: Cumartesi
+                                                break;
+                                            case "Sunday":
+                                                @: Pazar
+                                                break;
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    @DateTime.Parse(Html.DisplayFor(modelItem => item.S_TIME).ToString()).ToShortTimeString()
+                                </td>
+                                <td>
+                                    @{
+                                        string status = Html.DisplayFor(modelItem => item.STATUS).ToString();
+                                        switch (status)
+                                        {
+                                            case "A":
+                                                @: Kabul Edildi
+                                                break;
+                                            case "P":
+                                                @: Beklemede
+                                                break;
+                                            case "R":
+                                                @: Red Edildi
+                                                break;
+                                        }
+                                    }
+                                </td>
+                                <td>
+                                    <div class="hideextra">
+                                        @{
+                                            if (item.R_HISTORY != "1")
+                                            {
+                                                <input type="button" value="+" class="btn btn-success btn-sm btnPosSub" id="@item.SUBSCRIBER_ID" />
+                                                <input type="button" value="-" class="btn btn-danger btn-sm btnNegSub" id="@item.SUBSCRIBER_ID" />
+                                            }
+                                            else
+                                            {
+                                                <input type="button" value="+" class="btn btn-success btn-sm btnPosSub" id="@item.SUBSCRIBER_ID" disabled />
+                                                <input type="button" value="-" class="btn btn-danger btn-sm btnNegSub" id="@item.SUBSCRIBER_ID" disabled />
+                                            }
+                                        }
+
+                                    </div>
+                                </td>
+                            </tr>
+                                            }
+                    </table>
+                    <ul class="pager">
+                        <li class="next">
+
+                            @*Sayfalandırma kodu*@
+                            <br /> Sayfa @(Model.AllSubscibers.PageCount < Model.AllSubscibers.PageNumber ? 0 : Model.AllSubscibers.PageNumber) / @Model.AllSubscibers.PageCount
+                            @Html.PagedListPager(Model.AllSubscibers, pageAllSub => Url.Action("Index", new { pageAllSub, selectedTab = 3 }))
+
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.selectedTab, new { @id = "selectedTab" })
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">İşlem Sonucu</h4>
+            </div>
+            <div class="modal-body">
+                <div id="mdResult">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success resultOK" id="@Url.Action("Index", "Approve")">Tamam</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script src="~/js/bootbox.js"></script>
+<script src="~/js/approve.js"></script>
+<script src="~/js/layout.js"></script>
+<script src="~/Scripts/sweetalert.min.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/sweetalert.css">
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />
+
+<script>
+    $(document).ready(function () {
+        $(".btnPosRes").click(function () {
+            var myId = $(this).attr("id");
+            swal({
+                title: "Emin misiniz?",
+                text: "Pozitif geri dönüş yapmak istediğinize emin misiniz?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Evet!",
+                confirmButtonColor: "#449d44",
+                cancelButtonText: "Hayır"
+            },
+            function (isConfirm) {
+                if (isConfirm == false) {
+                    swal("İptal edildi", "İşlemden vazgeçildi!", "error");
+                }
+                else {
+                    $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Approve/UserPos",
+                        data: { id: myId, type: "R" },
+                        success: function (data) {
+                            if (data) {
+                                swal({
+                                    title: "İşlem tamam!",
+                                    text: "İşlem başarıyla tamamlandı!",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () { window.location.href = '@Url.Action("Index", "Approve")' }, 1500);
+                            }
+                            else {
+                                swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                            }
+                        }
+                    })
+                    .done(function (data) {
+                        swal("İşlem tamam!", "İşlem başarıyla tamamlandı!", "success");
+                    })
+                    .error(function (data) {
+                        swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                    });
+                }
+            });
+        });
+
+        $(".btnNegRes").click(function () {
+            var userId = $(this).attr("id");
+            swal({
+                title: "Emin misiniz?",
+                text: "Negatif geri dönüş yapmak istediğinize emin misiniz?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Evet!",
+                confirmButtonColor: "#449d44",
+                cancelButtonText: "Hayır"
+            },
+            function (isConfirm) {
+                if (isConfirm == false) {
+                    swal("İptal edildi", "İşlemden vazgeçildi!", "error");
+                }
+                else {
+                    $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Approve/UserNeg",
+                        data: { id: userId, type: "R" },
+                        success: function (data) {
+                            if (data) {
+                                swal({
+                                    title: "İşlem tamam!",
+                                    text: "İşlem başarıyla tamamlandı!",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () { window.location.href = '@Url.Action("Index", "Approve")' }, 1500);
+                            }
+                            else {
+                                swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                            }
+                        }
+                    })
+                    .done(function (data) {
+                        swal("İşlem tamam!", "İşlem başarıyla tamamlandı!", "success");
+                    })
+                    .error(function (data) {
+                        swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                    });
+                }
+            });
+        });
+
+        $(".btnPosSub").click(function () {
+            var myId = $(this).attr("id");
+            swal({
+                title: "Emin misiniz?",
+                text: "Pozitif geri dönüş yapmak istediğinize emin misiniz?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Evet!",
+                confirmButtonColor: "#449d44",
+                cancelButtonText: "Hayır"
+            },
+            function (isConfirm) {
+                if (isConfirm == false) {
+                    swal("İptal edildi", "İşlemden vazgeçildi!", "error");
+                }
+                else {
+                    $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Approve/UserPos",
+                        data: { id: myId, type: "S" },
+                        success: function (data) {
+                            if (data) {
+                                swal({
+                                    title: "İşlem tamam!",
+                                    text: "İşlem başarıyla tamamlandı!",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () { window.location.href = '@Url.Action("Index", "Approve")' }, 1500);
+                            }
+                            else {
+                                swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                            }
+                        }
+                    })
+                    .done(function (data) {
+                        swal("İşlem tamam!", "İşlem başarıyla tamamlandı!", "success");
+                    })
+                    .error(function (data) {
+                        swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                    });
+                }
+            });
+        });
+
+        $(".btnNegSub").click(function () {
+            var userId = $(this).attr("id");
+            swal({
+                title: "Emin misiniz?",
+                text: "Negatif geri dönüş yapmak istediğinize emin misiniz?",
+                type: "warning",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                closeOnCancel: false,
+                showLoaderOnConfirm: true,
+                confirmButtonText: "Evet!",
+                confirmButtonColor: "#449d44",
+                cancelButtonText: "Hayır"
+            },
+            function (isConfirm) {
+                if (isConfirm == false) {
+                    swal("İptal edildi", "İşlemden vazgeçildi!", "error");
+                }
+                else {
+                    $.ajax(
+                    {
+                        type: "POST",
+                        url: "/Approve/UserNeg",
+                        data: { id: userId, type: "S" },
+                        success: function (data) {
+                            if (data) {
+                                swal({
+                                    title: "İşlem tamam!",
+                                    text: "İşlem başarıyla tamamlandı!",
+                                    type: "success",
+                                    showConfirmButton: false
+                                });
+                                setTimeout(function () { window.location.href = '@Url.Action("Index", "Approve")' }, 1500);
+                            }
+                            else {
+                                swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                            }
+                        }
+                    })
+                    .done(function (data) {
+                        swal("İşlem tamam!", "İşlem başarıyla tamamlandı!", "success");
+                    })
+                    .error(function (data) {
+                        swal("Oops", "İşlem yapılırken bir sorun oluştu!", "error");
+                    });
+                }
+            });
+        });
+    });
+</script>

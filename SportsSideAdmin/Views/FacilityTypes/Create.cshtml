@@ -1,0 +1,58 @@
+﻿@model SportsSide.DAL.FACILITY_TYPE
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Tesis Türü Oluştur</h2>
+
+@using (Html.BeginForm("Create", "FacilityTypes", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+            </div>
+        }
+        <div class="form-group">
+            @Html.Label("Tesis Türü :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <input type="text" id="ftName" name="ftName" placeholder="Tesis türü giriniz" class="form-control" maxlength="50"/>
+                @*@Html.ValidationMessageFor(model => model.FT_NAME, "", new { @class = "text-danger" })*@
+                @*@Html.EditorFor(model => model.FT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Tesis türü giriniz" } })*@
+                @*@Html.ValidationMessageFor(model => model.FT_NAME, "", new { @class = "text-danger" })*@
+                <span class="text-danger field-validation-error" id="validateFtName"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tesis Türü Fotoğrafı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @*@Html.EditorFor(model => model.FT_PICTURE, new { type="file"})*@
+                <input type="file" name="file" value="Gözat" class="btn btn-warning"/>
+                @Html.ValidationMessageFor(model => model.FT_PICTURE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" id="btnSubmit" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "FacilityTypes")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/facilityType.js"></script>
+<script src="~/js/layout.js"></script>

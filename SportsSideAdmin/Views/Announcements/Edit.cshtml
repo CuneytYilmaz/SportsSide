@@ -1,0 +1,56 @@
+﻿@model SportsSide.DAL.ANNOUNCEMENTS
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Duyuru Düzenle</h2>
+
+
+@using (Html.BeginForm("Edit", "Announcements", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(model => model.A_ID);
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+            </div>
+        }
+        <div class="form-group">
+            @Html.Label("Duyuru Başlığı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.A_TITLE, new { htmlAttributes = new { @class = "form-control", placeholder = "Duyuru başlığı giriniz" } })
+                @Html.ValidationMessageFor(model => model.A_TITLE, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Duyuru İçeriği :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(model => model.A_CONTENT, new { @class = "form-control", placeholder = "Duyuru içeriği giriniz", @style = "resize: vertical;" })
+                @Html.ValidationMessageFor(model => model.A_CONTENT, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Announcements")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

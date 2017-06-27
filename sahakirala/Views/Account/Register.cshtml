@@ -1,0 +1,225 @@
+﻿@model Database.USER
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="fresh Gray Bootstrap 3.0 Responsive Theme ">
+    <meta name="keywords" content="Template, Theme, web, html5, css3, Bootstrap,Bootstrap 3.0 Responsive Login">
+    <meta name="author" content="Adsays">
+    <link rel="shortcut icon" href="favicon.png">
+    <title>SportsSide - Kullanıcı Kayıt</title>
+    <link href="~/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/demo.css" rel="stylesheet" />
+    <link rel="stylesheet" id="fordemo" href="~/css/login-theme-10.css" type="text/css">
+    <link href="~/css/animate-custom.css" rel="stylesheet" />
+    <link href="~/css/sweetalert.css" rel="stylesheet" />
+    <script src="~/js/jquery-2.1.3.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/sweetalert.min.js"></script>
+</head>
+<body class="fade-in">
+    <div class="container" id="login-block">
+        <div class="row">
+            <div class="col-sm-6 col-md-4 col-sm-offset-3 col-md-offset-4">
+
+                <div class="login-box clearfix animated flipInY">
+                    <div class="page-icon animated bounceInDown">
+                        <img src="~/img/user-icon.png" alt="Key icon">
+                    </div>
+                    <div class="login-logo">
+                        <div class="row">
+                            <a href="#?login-theme-10"><img src="~/img/accountLogo.png" alt="Company Logo"></a>
+                        </div>
+
+                        <div class="row">
+                            <span style="font-size:26px;">SportsSide</span>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="login-form">
+                        <!-- Start Error box -->
+                        <div class="alert alert-danger hide">
+                            <button type="button" class="close" data-dismiss="alert"> ×</button>
+                            <h4>Error!</h4>
+                            Your Error Message goes here
+                        </div> <!-- End Error box -->
+                        @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(model => model.USER_ID)
+
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                
+                                    @Html.EditorFor(model => model.USER_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Kullanıcı Adınızı Giriniz" } })
+                                    @Html.ValidationMessageFor(model => model.USER_NAME, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                         
+                                    @Html.EditorFor(model => model.USER_PASSWORD, new { htmlAttributes = new { @class = "form-control", placeholder = "Şifrenizi Giriniz", @id = "UserPassword1", @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.USER_PASSWORD, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                     
+                                    @Html.EditorFor(model => model.USER_PASSWORD, new { htmlAttributes = new { @class = "form-control", placeholder = "Şifrenizi Tekrar Giriniz", @id = "UserPassword2", @type = "password" } })
+                                    @Html.ValidationMessageFor(model => model.USER_PASSWORD, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                               
+                                    @Html.EditorFor(model => model.USER_FIRST_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "İsminizi Giriniz" } })
+                                    @Html.ValidationMessageFor(model => model.USER_FIRST_NAME, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                
+                                    @Html.EditorFor(model => model.USER_SURNAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Soyisminizi Giriniz" } })
+                                    @Html.ValidationMessageFor(model => model.USER_SURNAME, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                
+                                    @Html.EditorFor(model => model.USER_MAIL, new { htmlAttributes = new { @class = "form-control", placeholder = "Mailinizi Giriniz" } })
+                                    @Html.ValidationMessageFor(model => model.USER_MAIL, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                
+                                    @Html.EditorFor(model => model.USER_GSM, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefon Numaranızı Giriniz" } })
+                                    @Html.ValidationMessageFor(model => model.USER_GSM, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                
+                                    @Html.DropDownList("ddlAreas", ViewBag.Areas as SelectList, "Seçiniz", new { @class = "form-control input-sm select2search", id = "ddlAreas", style = "width:70%; margin-left:54px;" })
+                                    @Html.ValidationMessageFor(model => model.DISTRICT.CITY.AREA.AREA_ID, "", new { @class = "text-danger", @style = "margin-left:60px;" })                                
+                                
+                                    @Html.DropDownList("ddlCities", Enumerable.Empty<SelectListItem>(), "Bölge Seçiniz", new { @class = "form-control input-sm select2search", id = "ddlCities", style = "width:70%; margin-left:54px;" })
+                                    @Html.ValidationMessageFor(model => model.DISTRICT.CITY.CITY_ID, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                
+                                    @Html.DropDownList("USER_DISTRICT", Enumerable.Empty<SelectListItem>(), "Sehir Seçiniz", htmlAttributes: new { @class = "form-control input-sm select2search", id = "ddlDistricts", style = "width:70%; margin-left:54px;" })
+                                    @Html.ValidationMessageFor(model => model.USER_DISTRICT, "", new { @class = "text-danger", @style = "margin-left:60px;" })
+                                
+                            </div>
+                            <button class="btn btn-login" id="kayitBtn">Kayıt Ol</button>
+                            <div class="login-links">
+                                <a href="/Account/Login">
+                                    Hesabiniz var mi? <strong>Giris Yap</strong>
+                                </a>
+                            </div>
+
+
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade bs-example-modal-sm" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header alert-danger">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Hata</h4>
+                    </div>
+                    <div class="modal-body">
+                        Şifreler aynı değil!
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="errorOK">Tamam</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(document).ready(function () {
+                $('#kayitBtn').click(function () {
+                    if ($('#UserPassword1').val() != $('#UserPassword2').val()) {
+                        $('#errorModal').modal('show');
+                        return false;
+                    }
+
+                    if ($('#ddlAreas').val() == "") {
+                        swal({
+                            title: "",
+                            text: "Lütfen Bölge Seçiniz",
+                        html: true
+                        });
+                        return false;
+                    }
+                    if ($('#ddlCities').val() == "") {
+                        swal({
+                            title: "",
+                            text: "Lütfen Şehir Seçiniz",
+                            html: true
+                        });
+                        return false;
+                    }
+                    if ($('#ddlDistricts').val() == "") {
+                        swal({
+                            title: "",
+                            text: "Lütfen İlçe Seçiniz",
+                            html: true
+                        });
+                        return false;
+                    }
+
+                });
+
+                
+
+                $("#ddlAreas").change(function () {
+                    var index = $(this).val();
+                    $("#ddlCities").empty();
+                    $("#ddlDistricts").empty();
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: "http://localhost:4285/SSApi/GetCitiesByAreas",
+                        data: { areaId: index },
+                        success: function (data) {
+                            $(data).each(function (key, item) {
+                                $("#ddlCities").append(
+                                    $("<option></option>").val(item.CITY_ID).html(item.CITY_NAME)
+                                );
+                                if (key == 0) {
+                                    getDistricts(item.CITY_ID);
+                                }
+                            });
+                        },
+                        error: function (req, status, err) {
+                            console.log("HATA : ", req, status, err);
+                        }
+                    });
+                });
+
+
+                $("#ddlCities").change(function () {
+                    var index = $(this).val();
+                    getDistricts(index);
+                });
+
+                $("#errorOK").click(function () {
+                    $("#errorModal").modal("hide");
+                });
+
+                function getDistricts(index) {
+                    $("#ddlDistricts").empty();
+                    $.ajax({
+                        type: "GET",
+                        dataType: "json",
+                        url: "http://localhost:4285/SSApi/GetDistrictsByCities",
+                        data: { cityId: index },
+                        success: function (data) {
+                            $(data).each(function (key, item) {
+                                $("#ddlDistricts").append(
+                                    $("<option></option>").val(item.DISTRICT_ID).html(item.DISTRICT_NAME)
+                                );
+                            });
+                        },
+                        error: function (req, status, err) {
+                            console.log("HATA : ", req, status, err);
+                        }
+                    });
+                }
+
+                
+
+            });
+
+        </script>
+    </div>
+</body>
+</html>

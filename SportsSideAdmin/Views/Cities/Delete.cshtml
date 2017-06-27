@@ -1,0 +1,62 @@
+﻿@model SportsSide.DAL.CITY
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Seçili şehri silmek istediğinize emin misiniz?</h3>
+<div>
+    <hr />
+
+    @using (Html.BeginForm(Html.BeginForm("Delete", "Cities", FormMethod.Post, new { @class = "form-horizontal", role = "form" })))
+    {
+        @Html.HiddenFor(model => model.CITY_ID);
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            @if (TempData["Hata"] != null)
+            {
+                <div class="alert alert-danger">
+                    <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+                </div>
+            }
+            <div class="form-group">
+                @Html.Label("Şehir Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 control-label" style="text-align:left;">
+                    @Html.DisplayFor(model => model.CITY_NAME)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Şehir Kodu :", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 control-label" style="text-align:left;">
+                    @Html.DisplayFor(model => model.CITY_CODE)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.Label("Bölge Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10 control-label" style="text-align:left;">
+                    @Html.DisplayFor(model => model.AREA.AREA_NAME)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Sil" class="btn btn-danger" />
+                    <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "Cities")'" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Geri Dön", "Index")
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/layout.js"></script>
+<link rel="stylesheet" type="text/css" href="~/css/style.css" />

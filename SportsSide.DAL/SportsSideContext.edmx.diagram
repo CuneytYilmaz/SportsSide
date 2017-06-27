@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="88a262f73ea846a59e56d1d0320f67e4" Name="Diagram1">
+        <EntityTypeShape EntityType="SportsSideModel.AREA" Width="1.5" PointX="0.75" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.CITY" Width="1.5" PointX="3" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.DISTRICT" Width="1.5" PointX="5.25" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.FACILITY" Width="1.5" PointX="9.75" PointY="10.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.FACILITY_PICTURES" Width="1.5" PointX="12" PointY="13.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.FACILITY_TYPE" Width="1.5" PointX="7.5" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.SLIDER" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SportsSideModel.WAITED_USERS" Width="1.5" PointX="17.25" PointY="13.5" IsExpanded="true" />
+        <AssociationConnector Association="SportsSideModel.FK_CITY_AREA" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsSideModel.FK_DISTRICT_CITY" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsSideModel.FK_FACILITY_DISTRICT" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsSideModel.FK_FACILITY_FACILITY_TYPE" ManuallyRouted="false" />
+        <AssociationConnector Association="SportsSideModel.FK_FACILITY_PICTURES_FACILITY" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SportsSideModel.ANNOUNCEMENTS" Width="1.5" PointX="3.375" PointY="0.75" />
+        <EntityTypeShape EntityType="SportsSideModel.RESERVATION" Width="1.5" PointX="15" PointY="8.125" />
+        <AssociationConnector Association="SportsSideModel.FK_RESERVATION_FACILITY" />
+        <AssociationConnector Association="SportsSideModel.FK_WAITED_USERS_RESERVATION" />
+        <EntityTypeShape EntityType="SportsSideModel.USERS" Width="1.5" PointX="7.5" PointY="4.625" />
+        <AssociationConnector Association="SportsSideModel.FK_USERS_DISTRICT" />
+        <AssociationConnector Association="SportsSideModel.FK_FACILITY_USERS" />
+        <AssociationConnector Association="SportsSideModel.FK_RESERVATION_USERS" />
+        <AssociationConnector Association="SportsSideModel.FK_WAITED_USERS_USERS" />
+        <AssociationConnector Association="SportsSideModel.FK_WAITED_USERS_USERS2" />
+        <EntityTypeShape EntityType="SportsSideModel.SUBSCRIBER" Width="1.5" PointX="12" PointY="8.25" />
+        <AssociationConnector Association="SportsSideModel.FK_SUBSCRIBER_FACILITY" />
+        <AssociationConnector Association="SportsSideModel.FK_SUBSCRIBER_USERS" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,929 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SportsSideModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ANNOUNCEMENTS">
+          <Key>
+            <PropertyRef Name="A_ID" />
+          </Key>
+          <Property Name="A_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="A_TITLE" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="A_CONTENT" Type="nvarchar" MaxLength="400" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AREA">
+          <Key>
+            <PropertyRef Name="AREA_ID" />
+          </Key>
+          <Property Name="AREA_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AREA_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CITY">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AREA_ID" Type="int" Nullable="false" />
+          <Property Name="CITY_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="CITY_CODE" Type="int" />
+        </EntityType>
+        <EntityType Name="DISTRICT">
+          <Key>
+            <PropertyRef Name="DISTRICT_ID" />
+          </Key>
+          <Property Name="DISTRICT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CITY_ID" Type="int" Nullable="false" />
+          <Property Name="DISTRICT_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DISTRICT_ZIP_CODE" Type="int" />
+        </EntityType>
+        <EntityType Name="FACILITY">
+          <Key>
+            <PropertyRef Name="FACILITY_ID" />
+          </Key>
+          <Property Name="FACILITY_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="FACILITY_TYPE" Type="int" Nullable="false" />
+          <Property Name="DISTRICT_ID" Type="int" Nullable="false" />
+          <Property Name="FACILITY_NAME" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FACILITY_CAPACITY" Type="int" Nullable="false" />
+          <Property Name="FACILITY_ADDRESS" Type="nvarchar" MaxLength="200" />
+          <Property Name="FACILITY_PRICE" Type="int" Nullable="false" />
+          <Property Name="FACILITY_CONTENT" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="FACILITY_PICTURES">
+          <Key>
+            <PropertyRef Name="FP_ID" />
+          </Key>
+          <Property Name="FP_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="F_ID" Type="int" Nullable="false" />
+          <Property Name="FP_PICTURE" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="FACILITY_TYPE">
+          <Key>
+            <PropertyRef Name="FT_ID" />
+          </Key>
+          <Property Name="FT_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FT_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FT_PICTURE" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="RESERVATION">
+          <Key>
+            <PropertyRef Name="RESERVATION_ID" />
+          </Key>
+          <Property Name="RESERVATION_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="FACILITY_ID" Type="int" Nullable="false" />
+          <Property Name="DT_BEGIN" Type="datetime" Nullable="false" />
+          <Property Name="DT_END" Type="datetime" Nullable="false" />
+          <Property Name="CREATED_DATE" Type="datetime" Nullable="false" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="COUNT" Type="int" />
+          <Property Name="R_HISTORY" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="SLIDER">
+          <Key>
+            <PropertyRef Name="SLIDER_ID" />
+          </Key>
+          <Property Name="SLIDER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SLIDER_PICTURE" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="SLIDER_DESCRIPTION" Type="nvarchar" MaxLength="400" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SUBSCRIBER">
+          <Key>
+            <PropertyRef Name="SUBSCRIBER_ID" />
+          </Key>
+          <Property Name="SUBSCRIBER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="FACILITY_ID" Type="int" Nullable="false" />
+          <Property Name="WEEK_DAY" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="S_TIME" Type="time" Precision="7" Nullable="false" />
+          <Property Name="STATUS" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="CREATED_DATE" Type="datetime" Nullable="false" />
+          <Property Name="R_HISTORY" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_DISTRICT" Type="int" Nullable="false" />
+          <Property Name="USER_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_SURNAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_MAIL" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_GSM" Type="nvarchar" MaxLength="50" />
+          <Property Name="USER_TYPE" Type="nvarchar" MaxLength="1" Nullable="false" />
+          <Property Name="USER_PASSWORD" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="USER_FIRST_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="USER_POS" Type="int" />
+          <Property Name="USER_NEG" Type="int" />
+        </EntityType>
+        <EntityType Name="WAITED_USERS">
+          <Key>
+            <PropertyRef Name="WU_ID" />
+          </Key>
+          <Property Name="WU_ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="USER_ID" Type="int" Nullable="false" />
+          <Property Name="RESERVATION_ID" Type="int" />
+          <Property Name="INVITE_USER" Type="int" />
+          <Property Name="WU_STATUS" Type="nvarchar" MaxLength="1" />
+        </EntityType>
+        <Association Name="FK_CITY_AREA">
+          <End Role="AREA" Type="Self.AREA" Multiplicity="1" />
+          <End Role="CITY" Type="Self.CITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AREA">
+              <PropertyRef Name="AREA_ID" />
+            </Principal>
+            <Dependent Role="CITY">
+              <PropertyRef Name="AREA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DISTRICT_CITY">
+          <End Role="CITY" Type="Self.CITY" Multiplicity="1" />
+          <End Role="DISTRICT" Type="Self.DISTRICT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITY">
+              <PropertyRef Name="CITY_ID" />
+            </Principal>
+            <Dependent Role="DISTRICT">
+              <PropertyRef Name="CITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_DISTRICT">
+          <End Role="DISTRICT" Type="Self.DISTRICT" Multiplicity="1" />
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRICT">
+              <PropertyRef Name="DISTRICT_ID" />
+            </Principal>
+            <Dependent Role="FACILITY">
+              <PropertyRef Name="DISTRICT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_FACILITY_TYPE">
+          <End Role="FACILITY_TYPE" Type="Self.FACILITY_TYPE" Multiplicity="1" />
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY_TYPE">
+              <PropertyRef Name="FT_ID" />
+            </Principal>
+            <Dependent Role="FACILITY">
+              <PropertyRef Name="FACILITY_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_PICTURES_FACILITY">
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="1" />
+          <End Role="FACILITY_PICTURES" Type="Self.FACILITY_PICTURES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY">
+              <PropertyRef Name="FACILITY_ID" />
+            </Principal>
+            <Dependent Role="FACILITY_PICTURES">
+              <PropertyRef Name="F_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="FACILITY">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVATION_FACILITY">
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="1" />
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY">
+              <PropertyRef Name="FACILITY_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="FACILITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVATION_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBSCRIBER_FACILITY">
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="1" />
+          <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY">
+              <PropertyRef Name="FACILITY_ID" />
+            </Principal>
+            <Dependent Role="SUBSCRIBER">
+              <PropertyRef Name="FACILITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBSCRIBER_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="SUBSCRIBER" Type="Self.SUBSCRIBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="SUBSCRIBER">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_USERS_DISTRICT">
+          <End Role="DISTRICT" Type="Self.DISTRICT" Multiplicity="1" />
+          <End Role="USERS" Type="Self.USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRICT">
+              <PropertyRef Name="DISTRICT_ID" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="USER_DISTRICT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WAITED_USERS_RESERVATION">
+          <End Role="RESERVATION" Type="Self.RESERVATION" Multiplicity="0..1" />
+          <End Role="WAITED_USERS" Type="Self.WAITED_USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RESERVATION">
+              <PropertyRef Name="RESERVATION_ID" />
+            </Principal>
+            <Dependent Role="WAITED_USERS">
+              <PropertyRef Name="RESERVATION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WAITED_USERS_USERS">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="1" />
+          <End Role="WAITED_USERS" Type="Self.WAITED_USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="WAITED_USERS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WAITED_USERS_USERS2">
+          <End Role="USERS" Type="Self.USERS" Multiplicity="0..1" />
+          <End Role="WAITED_USERS" Type="Self.WAITED_USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="WAITED_USERS">
+              <PropertyRef Name="INVITE_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportsSideModelStoreContainer">
+          <EntitySet Name="ANNOUNCEMENTS" EntityType="Self.ANNOUNCEMENTS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AREA" EntityType="Self.AREA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CITY" EntityType="Self.CITY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DISTRICT" EntityType="Self.DISTRICT" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACILITY" EntityType="Self.FACILITY" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACILITY_PICTURES" EntityType="Self.FACILITY_PICTURES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FACILITY_TYPE" EntityType="Self.FACILITY_TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RESERVATION" EntityType="Self.RESERVATION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SLIDER" EntityType="Self.SLIDER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SUBSCRIBER" EntityType="Self.SUBSCRIBER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USERS" EntityType="Self.USERS" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WAITED_USERS" EntityType="Self.WAITED_USERS" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CITY_AREA" Association="Self.FK_CITY_AREA">
+            <End Role="AREA" EntitySet="AREA" />
+            <End Role="CITY" EntitySet="CITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DISTRICT_CITY" Association="Self.FK_DISTRICT_CITY">
+            <End Role="CITY" EntitySet="CITY" />
+            <End Role="DISTRICT" EntitySet="DISTRICT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_DISTRICT" Association="Self.FK_FACILITY_DISTRICT">
+            <End Role="DISTRICT" EntitySet="DISTRICT" />
+            <End Role="FACILITY" EntitySet="FACILITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_FACILITY_TYPE" Association="Self.FK_FACILITY_FACILITY_TYPE">
+            <End Role="FACILITY_TYPE" EntitySet="FACILITY_TYPE" />
+            <End Role="FACILITY" EntitySet="FACILITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_PICTURES_FACILITY" Association="Self.FK_FACILITY_PICTURES_FACILITY">
+            <End Role="FACILITY" EntitySet="FACILITY" />
+            <End Role="FACILITY_PICTURES" EntitySet="FACILITY_PICTURES" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_USERS" Association="Self.FK_FACILITY_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FACILITY" EntitySet="FACILITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVATION_FACILITY" Association="Self.FK_RESERVATION_FACILITY">
+            <End Role="FACILITY" EntitySet="FACILITY" />
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVATION_USERS" Association="Self.FK_RESERVATION_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBSCRIBER_FACILITY" Association="Self.FK_SUBSCRIBER_FACILITY">
+            <End Role="FACILITY" EntitySet="FACILITY" />
+            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBSCRIBER_USERS" Association="Self.FK_SUBSCRIBER_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_USERS_DISTRICT" Association="Self.FK_USERS_DISTRICT">
+            <End Role="DISTRICT" EntitySet="DISTRICT" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WAITED_USERS_RESERVATION" Association="Self.FK_WAITED_USERS_RESERVATION">
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+            <End Role="WAITED_USERS" EntitySet="WAITED_USERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WAITED_USERS_USERS" Association="Self.FK_WAITED_USERS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WAITED_USERS" EntitySet="WAITED_USERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WAITED_USERS_USERS2" Association="Self.FK_WAITED_USERS_USERS2">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WAITED_USERS" EntitySet="WAITED_USERS" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SportsSideModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AREA">
+          <Key>
+            <PropertyRef Name="AREA_ID" />
+          </Key>
+          <Property Name="AREA_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AREA_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="CITY" Relationship="Self.FK_CITY_AREA" FromRole="AREA" ToRole="CITY" />
+        </EntityType>
+        <EntityType Name="CITY">
+          <Key>
+            <PropertyRef Name="CITY_ID" />
+          </Key>
+          <Property Name="CITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AREA_ID" Type="Int32" Nullable="false" />
+          <Property Name="CITY_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="CITY_CODE" Type="Int32" />
+          <NavigationProperty Name="AREA" Relationship="Self.FK_CITY_AREA" FromRole="CITY" ToRole="AREA" />
+          <NavigationProperty Name="DISTRICT" Relationship="Self.FK_DISTRICT_CITY" FromRole="CITY" ToRole="DISTRICT" />
+        </EntityType>
+        <EntityType Name="DISTRICT">
+          <Key>
+            <PropertyRef Name="DISTRICT_ID" />
+          </Key>
+          <Property Name="DISTRICT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CITY_ID" Type="Int32" Nullable="false" />
+          <Property Name="DISTRICT_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DISTRICT_ZIP_CODE" Type="Int32" />
+          <NavigationProperty Name="CITY" Relationship="Self.FK_DISTRICT_CITY" FromRole="DISTRICT" ToRole="CITY" />
+          <NavigationProperty Name="FACILITY" Relationship="Self.FK_FACILITY_DISTRICT" FromRole="DISTRICT" ToRole="FACILITY" />
+          <NavigationProperty Name="USERS" Relationship="SportsSideModel.FK_USERS_DISTRICT" FromRole="DISTRICT" ToRole="USERS" />
+        </EntityType>
+        <EntityType Name="FACILITY">
+          <Key>
+            <PropertyRef Name="FACILITY_ID" />
+          </Key>
+          <Property Name="FACILITY_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="FACILITY_TYPE" Type="Int32" Nullable="false" />
+          <Property Name="DISTRICT_ID" Type="Int32" Nullable="false" />
+          <Property Name="FACILITY_NAME" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FACILITY_CAPACITY" Type="Int32" Nullable="false" />
+          <Property Name="FACILITY_ADDRESS" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="FACILITY_PRICE" Type="Int32" Nullable="false" />
+          <Property Name="FACILITY_CONTENT" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="DISTRICT" Relationship="Self.FK_FACILITY_DISTRICT" FromRole="FACILITY" ToRole="DISTRICT" />
+          <NavigationProperty Name="FACILITY_TYPE1" Relationship="Self.FK_FACILITY_FACILITY_TYPE" FromRole="FACILITY" ToRole="FACILITY_TYPE" />
+          <NavigationProperty Name="FACILITY_PICTURES" Relationship="Self.FK_FACILITY_PICTURES_FACILITY" FromRole="FACILITY" ToRole="FACILITY_PICTURES" />
+          <NavigationProperty Name="RESERVATION" Relationship="SportsSideModel.FK_RESERVATION_FACILITY" FromRole="FACILITY" ToRole="RESERVATION" />
+          <NavigationProperty Name="USERS" Relationship="SportsSideModel.FK_FACILITY_USERS" FromRole="FACILITY" ToRole="USERS" />
+          <NavigationProperty Name="SUBSCRIBER" Relationship="SportsSideModel.FK_SUBSCRIBER_FACILITY" FromRole="FACILITY" ToRole="SUBSCRIBER" />
+        </EntityType>
+        <EntityType Name="FACILITY_PICTURES">
+          <Key>
+            <PropertyRef Name="FP_ID" />
+          </Key>
+          <Property Name="FP_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="F_ID" Type="Int32" Nullable="false" />
+          <Property Name="FP_PICTURE" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FACILITY" Relationship="Self.FK_FACILITY_PICTURES_FACILITY" FromRole="FACILITY_PICTURES" ToRole="FACILITY" />
+        </EntityType>
+        <EntityType Name="FACILITY_TYPE">
+          <Key>
+            <PropertyRef Name="FT_ID" />
+          </Key>
+          <Property Name="FT_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FT_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FT_PICTURE" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FACILITY" Relationship="Self.FK_FACILITY_FACILITY_TYPE" FromRole="FACILITY_TYPE" ToRole="FACILITY" />
+        </EntityType>
+        <EntityType Name="SLIDER">
+          <Key>
+            <PropertyRef Name="SLIDER_ID" />
+          </Key>
+          <Property Name="SLIDER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SLIDER_PICTURE" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SLIDER_DESCRIPTION" Type="String" MaxLength="400" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WAITED_USERS">
+          <Key>
+            <PropertyRef Name="WU_ID" />
+          </Key>
+          <Property Name="WU_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="RESERVATION_ID" Type="Int32" />
+          <Property Name="INVITE_USER" Type="Int32" />
+          <Property Name="WU_STATUS" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="RESERVATION" Relationship="SportsSideModel.FK_WAITED_USERS_RESERVATION" FromRole="WAITED_USERS" ToRole="RESERVATION" />
+          <NavigationProperty Name="USERS" Relationship="SportsSideModel.FK_WAITED_USERS_USERS" FromRole="WAITED_USERS" ToRole="USERS" />
+          <NavigationProperty Name="USERS1" Relationship="SportsSideModel.FK_WAITED_USERS_USERS2" FromRole="WAITED_USERS" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK_CITY_AREA">
+          <End Role="AREA" Type="Self.AREA" Multiplicity="1" />
+          <End Role="CITY" Type="Self.CITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AREA">
+              <PropertyRef Name="AREA_ID" />
+            </Principal>
+            <Dependent Role="CITY">
+              <PropertyRef Name="AREA_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DISTRICT_CITY">
+          <End Role="CITY" Type="Self.CITY" Multiplicity="1" />
+          <End Role="DISTRICT" Type="Self.DISTRICT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CITY">
+              <PropertyRef Name="CITY_ID" />
+            </Principal>
+            <Dependent Role="DISTRICT">
+              <PropertyRef Name="CITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_DISTRICT">
+          <End Role="DISTRICT" Type="Self.DISTRICT" Multiplicity="1" />
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRICT">
+              <PropertyRef Name="DISTRICT_ID" />
+            </Principal>
+            <Dependent Role="FACILITY">
+              <PropertyRef Name="DISTRICT_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_FACILITY_TYPE">
+          <End Role="FACILITY_TYPE" Type="Self.FACILITY_TYPE" Multiplicity="1" />
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY_TYPE">
+              <PropertyRef Name="FT_ID" />
+            </Principal>
+            <Dependent Role="FACILITY">
+              <PropertyRef Name="FACILITY_TYPE" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_PICTURES_FACILITY">
+          <End Role="FACILITY" Type="Self.FACILITY" Multiplicity="1" />
+          <End Role="FACILITY_PICTURES" Type="Self.FACILITY_PICTURES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY">
+              <PropertyRef Name="FACILITY_ID" />
+            </Principal>
+            <Dependent Role="FACILITY_PICTURES">
+              <PropertyRef Name="F_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SportsSideEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AREA" EntityType="Self.AREA" />
+          <EntitySet Name="CITY" EntityType="Self.CITY" />
+          <EntitySet Name="DISTRICT" EntityType="Self.DISTRICT" />
+          <EntitySet Name="FACILITY" EntityType="Self.FACILITY" />
+          <EntitySet Name="FACILITY_PICTURES" EntityType="Self.FACILITY_PICTURES" />
+          <EntitySet Name="FACILITY_TYPE" EntityType="Self.FACILITY_TYPE" />
+          <EntitySet Name="SLIDER" EntityType="Self.SLIDER" />
+          <EntitySet Name="WAITED_USERS" EntityType="Self.WAITED_USERS" />
+          <AssociationSet Name="FK_CITY_AREA" Association="Self.FK_CITY_AREA">
+            <End Role="AREA" EntitySet="AREA" />
+            <End Role="CITY" EntitySet="CITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DISTRICT_CITY" Association="Self.FK_DISTRICT_CITY">
+            <End Role="CITY" EntitySet="CITY" />
+            <End Role="DISTRICT" EntitySet="DISTRICT" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_DISTRICT" Association="Self.FK_FACILITY_DISTRICT">
+            <End Role="DISTRICT" EntitySet="DISTRICT" />
+            <End Role="FACILITY" EntitySet="FACILITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_FACILITY_TYPE" Association="Self.FK_FACILITY_FACILITY_TYPE">
+            <End Role="FACILITY_TYPE" EntitySet="FACILITY_TYPE" />
+            <End Role="FACILITY" EntitySet="FACILITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_PICTURES_FACILITY" Association="Self.FK_FACILITY_PICTURES_FACILITY">
+            <End Role="FACILITY" EntitySet="FACILITY" />
+            <End Role="FACILITY_PICTURES" EntitySet="FACILITY_PICTURES" />
+          </AssociationSet>
+          <EntitySet Name="ANNOUNCEMENTS" EntityType="SportsSideModel.ANNOUNCEMENTS" />
+          <EntitySet Name="RESERVATION" EntityType="SportsSideModel.RESERVATION" />
+          <AssociationSet Name="FK_RESERVATION_FACILITY" Association="SportsSideModel.FK_RESERVATION_FACILITY">
+            <End Role="FACILITY" EntitySet="FACILITY" />
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WAITED_USERS_RESERVATION" Association="SportsSideModel.FK_WAITED_USERS_RESERVATION">
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+            <End Role="WAITED_USERS" EntitySet="WAITED_USERS" />
+          </AssociationSet>
+          <EntitySet Name="USERS" EntityType="SportsSideModel.USERS" />
+          <AssociationSet Name="FK_USERS_DISTRICT" Association="SportsSideModel.FK_USERS_DISTRICT">
+            <End Role="DISTRICT" EntitySet="DISTRICT" />
+            <End Role="USERS" EntitySet="USERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FACILITY_USERS" Association="SportsSideModel.FK_FACILITY_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="FACILITY" EntitySet="FACILITY" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RESERVATION_USERS" Association="SportsSideModel.FK_RESERVATION_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="RESERVATION" EntitySet="RESERVATION" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WAITED_USERS_USERS" Association="SportsSideModel.FK_WAITED_USERS_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WAITED_USERS" EntitySet="WAITED_USERS" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WAITED_USERS_USERS2" Association="SportsSideModel.FK_WAITED_USERS_USERS2">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="WAITED_USERS" EntitySet="WAITED_USERS" />
+          </AssociationSet>
+          <EntitySet Name="SUBSCRIBER" EntityType="SportsSideModel.SUBSCRIBER" />
+          <AssociationSet Name="FK_SUBSCRIBER_FACILITY" Association="SportsSideModel.FK_SUBSCRIBER_FACILITY">
+            <End Role="FACILITY" EntitySet="FACILITY" />
+            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SUBSCRIBER_USERS" Association="SportsSideModel.FK_SUBSCRIBER_USERS">
+            <End Role="USERS" EntitySet="USERS" />
+            <End Role="SUBSCRIBER" EntitySet="SUBSCRIBER" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ANNOUNCEMENTS">
+          <Key>
+            <PropertyRef Name="A_ID" />
+          </Key>
+          <Property Name="A_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="A_TITLE" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="A_CONTENT" Type="String" Nullable="false" MaxLength="400" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RESERVATION">
+          <Key>
+            <PropertyRef Name="RESERVATION_ID" />
+          </Key>
+          <Property Name="RESERVATION_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="FACILITY_ID" Type="Int32" Nullable="false" />
+          <Property Name="DT_BEGIN" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DT_END" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CREATED_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="COUNT" Type="Int32" />
+          <Property Name="R_HISTORY" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FACILITY" Relationship="SportsSideModel.FK_RESERVATION_FACILITY" FromRole="RESERVATION" ToRole="FACILITY" />
+          <NavigationProperty Name="WAITED_USERS" Relationship="SportsSideModel.FK_WAITED_USERS_RESERVATION" FromRole="RESERVATION" ToRole="WAITED_USERS" />
+          <NavigationProperty Name="USERS" Relationship="SportsSideModel.FK_RESERVATION_USERS" FromRole="RESERVATION" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK_RESERVATION_FACILITY">
+          <End Type="SportsSideModel.FACILITY" Role="FACILITY" Multiplicity="1" />
+          <End Type="SportsSideModel.RESERVATION" Role="RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY">
+              <PropertyRef Name="FACILITY_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="FACILITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WAITED_USERS_RESERVATION">
+          <End Type="SportsSideModel.RESERVATION" Role="RESERVATION" Multiplicity="0..1" />
+          <End Type="SportsSideModel.WAITED_USERS" Role="WAITED_USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RESERVATION">
+              <PropertyRef Name="RESERVATION_ID" />
+            </Principal>
+            <Dependent Role="WAITED_USERS">
+              <PropertyRef Name="RESERVATION_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="USERS">
+          <Key>
+            <PropertyRef Name="USER_ID" />
+          </Key>
+          <Property Name="USER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_DISTRICT" Type="Int32" Nullable="false" />
+          <Property Name="USER_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_SURNAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_MAIL" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_GSM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_TYPE" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="USER_PASSWORD" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="USER_FIRST_NAME" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="USER_POS" Type="Int32" />
+          <Property Name="USER_NEG" Type="Int32" />
+          <NavigationProperty Name="DISTRICT" Relationship="SportsSideModel.FK_USERS_DISTRICT" FromRole="USERS" ToRole="DISTRICT" />
+          <NavigationProperty Name="FACILITY" Relationship="SportsSideModel.FK_FACILITY_USERS" FromRole="USERS" ToRole="FACILITY" />
+          <NavigationProperty Name="RESERVATION" Relationship="SportsSideModel.FK_RESERVATION_USERS" FromRole="USERS" ToRole="RESERVATION" />
+          <NavigationProperty Name="WAITED_USERS" Relationship="SportsSideModel.FK_WAITED_USERS_USERS" FromRole="USERS" ToRole="WAITED_USERS" />
+          <NavigationProperty Name="WAITED_USERS1" Relationship="SportsSideModel.FK_WAITED_USERS_USERS2" FromRole="USERS" ToRole="WAITED_USERS" />
+          <NavigationProperty Name="SUBSCRIBER" Relationship="SportsSideModel.FK_SUBSCRIBER_USERS" FromRole="USERS" ToRole="SUBSCRIBER" />
+        </EntityType>
+        <Association Name="FK_USERS_DISTRICT">
+          <End Type="SportsSideModel.DISTRICT" Role="DISTRICT" Multiplicity="1" />
+          <End Type="SportsSideModel.USERS" Role="USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DISTRICT">
+              <PropertyRef Name="DISTRICT_ID" />
+            </Principal>
+            <Dependent Role="USERS">
+              <PropertyRef Name="USER_DISTRICT" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FACILITY_USERS">
+          <End Type="SportsSideModel.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="SportsSideModel.FACILITY" Role="FACILITY" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="FACILITY">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RESERVATION_USERS">
+          <End Type="SportsSideModel.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="SportsSideModel.RESERVATION" Role="RESERVATION" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="RESERVATION">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WAITED_USERS_USERS">
+          <End Type="SportsSideModel.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="SportsSideModel.WAITED_USERS" Role="WAITED_USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="WAITED_USERS">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WAITED_USERS_USERS2">
+          <End Type="SportsSideModel.USERS" Role="USERS" Multiplicity="0..1" />
+          <End Type="SportsSideModel.WAITED_USERS" Role="WAITED_USERS" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="WAITED_USERS">
+              <PropertyRef Name="INVITE_USER" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="SUBSCRIBER">
+          <Key>
+            <PropertyRef Name="SUBSCRIBER_ID" />
+          </Key>
+          <Property Name="SUBSCRIBER_ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="USER_ID" Type="Int32" Nullable="false" />
+          <Property Name="FACILITY_ID" Type="Int32" Nullable="false" />
+          <Property Name="WEEK_DAY" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="S_TIME" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="STATUS" Type="String" Nullable="false" MaxLength="1" FixedLength="false" Unicode="true" />
+          <Property Name="CREATED_DATE" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="R_HISTORY" Type="String" MaxLength="1" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="FACILITY" Relationship="SportsSideModel.FK_SUBSCRIBER_FACILITY" FromRole="SUBSCRIBER" ToRole="FACILITY" />
+          <NavigationProperty Name="USERS" Relationship="SportsSideModel.FK_SUBSCRIBER_USERS" FromRole="SUBSCRIBER" ToRole="USERS" />
+        </EntityType>
+        <Association Name="FK_SUBSCRIBER_FACILITY">
+          <End Type="SportsSideModel.FACILITY" Role="FACILITY" Multiplicity="1" />
+          <End Type="SportsSideModel.SUBSCRIBER" Role="SUBSCRIBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FACILITY">
+              <PropertyRef Name="FACILITY_ID" />
+            </Principal>
+            <Dependent Role="SUBSCRIBER">
+              <PropertyRef Name="FACILITY_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SUBSCRIBER_USERS">
+          <End Type="SportsSideModel.USERS" Role="USERS" Multiplicity="1" />
+          <End Type="SportsSideModel.SUBSCRIBER" Role="SUBSCRIBER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USERS">
+              <PropertyRef Name="USER_ID" />
+            </Principal>
+            <Dependent Role="SUBSCRIBER">
+              <PropertyRef Name="USER_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SportsSideModelStoreContainer" CdmEntityContainer="SportsSideEntities">
+          <EntitySetMapping Name="AREA">
+            <EntityTypeMapping TypeName="SportsSideModel.AREA">
+              <MappingFragment StoreEntitySet="AREA">
+                <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+                <ScalarProperty Name="AREA_NAME" ColumnName="AREA_NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CITY">
+            <EntityTypeMapping TypeName="SportsSideModel.CITY">
+              <MappingFragment StoreEntitySet="CITY">
+                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
+                <ScalarProperty Name="AREA_ID" ColumnName="AREA_ID" />
+                <ScalarProperty Name="CITY_NAME" ColumnName="CITY_NAME" />
+                <ScalarProperty Name="CITY_CODE" ColumnName="CITY_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DISTRICT">
+            <EntityTypeMapping TypeName="SportsSideModel.DISTRICT">
+              <MappingFragment StoreEntitySet="DISTRICT">
+                <ScalarProperty Name="DISTRICT_ID" ColumnName="DISTRICT_ID" />
+                <ScalarProperty Name="CITY_ID" ColumnName="CITY_ID" />
+                <ScalarProperty Name="DISTRICT_NAME" ColumnName="DISTRICT_NAME" />
+                <ScalarProperty Name="DISTRICT_ZIP_CODE" ColumnName="DISTRICT_ZIP_CODE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACILITY">
+            <EntityTypeMapping TypeName="SportsSideModel.FACILITY">
+              <MappingFragment StoreEntitySet="FACILITY">
+                <ScalarProperty Name="FACILITY_ID" ColumnName="FACILITY_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="FACILITY_TYPE" ColumnName="FACILITY_TYPE" />
+                <ScalarProperty Name="DISTRICT_ID" ColumnName="DISTRICT_ID" />
+                <ScalarProperty Name="FACILITY_NAME" ColumnName="FACILITY_NAME" />
+                <ScalarProperty Name="FACILITY_CAPACITY" ColumnName="FACILITY_CAPACITY" />
+                <ScalarProperty Name="FACILITY_ADDRESS" ColumnName="FACILITY_ADDRESS" />
+                <ScalarProperty Name="FACILITY_PRICE" ColumnName="FACILITY_PRICE" />
+                <ScalarProperty Name="FACILITY_CONTENT" ColumnName="FACILITY_CONTENT" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACILITY_PICTURES">
+            <EntityTypeMapping TypeName="SportsSideModel.FACILITY_PICTURES">
+              <MappingFragment StoreEntitySet="FACILITY_PICTURES">
+                <ScalarProperty Name="FP_ID" ColumnName="FP_ID" />
+                <ScalarProperty Name="F_ID" ColumnName="F_ID" />
+                <ScalarProperty Name="FP_PICTURE" ColumnName="FP_PICTURE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FACILITY_TYPE">
+            <EntityTypeMapping TypeName="SportsSideModel.FACILITY_TYPE">
+              <MappingFragment StoreEntitySet="FACILITY_TYPE">
+                <ScalarProperty Name="FT_ID" ColumnName="FT_ID" />
+                <ScalarProperty Name="FT_NAME" ColumnName="FT_NAME" />
+                <ScalarProperty Name="FT_PICTURE" ColumnName="FT_PICTURE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SLIDER">
+            <EntityTypeMapping TypeName="SportsSideModel.SLIDER">
+              <MappingFragment StoreEntitySet="SLIDER">
+                <ScalarProperty Name="SLIDER_ID" ColumnName="SLIDER_ID" />
+                <ScalarProperty Name="SLIDER_PICTURE" ColumnName="SLIDER_PICTURE" />
+                <ScalarProperty Name="SLIDER_DESCRIPTION" ColumnName="SLIDER_DESCRIPTION" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WAITED_USERS">
+            <EntityTypeMapping TypeName="SportsSideModel.WAITED_USERS">
+              <MappingFragment StoreEntitySet="WAITED_USERS">
+                <ScalarProperty Name="WU_ID" ColumnName="WU_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+                <ScalarProperty Name="INVITE_USER" ColumnName="INVITE_USER" />
+                <ScalarProperty Name="WU_STATUS" ColumnName="WU_STATUS" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ANNOUNCEMENTS">
+            <EntityTypeMapping TypeName="SportsSideModel.ANNOUNCEMENTS">
+              <MappingFragment StoreEntitySet="ANNOUNCEMENTS">
+                <ScalarProperty Name="A_CONTENT" ColumnName="A_CONTENT" />
+                <ScalarProperty Name="A_TITLE" ColumnName="A_TITLE" />
+                <ScalarProperty Name="A_ID" ColumnName="A_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RESERVATION">
+            <EntityTypeMapping TypeName="SportsSideModel.RESERVATION">
+              <MappingFragment StoreEntitySet="RESERVATION">
+                <ScalarProperty Name="R_HISTORY" ColumnName="R_HISTORY" />
+                <ScalarProperty Name="COUNT" ColumnName="COUNT" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="DT_END" ColumnName="DT_END" />
+                <ScalarProperty Name="DT_BEGIN" ColumnName="DT_BEGIN" />
+                <ScalarProperty Name="FACILITY_ID" ColumnName="FACILITY_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="RESERVATION_ID" ColumnName="RESERVATION_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERS">
+            <EntityTypeMapping TypeName="SportsSideModel.USERS">
+              <MappingFragment StoreEntitySet="USERS">
+                <ScalarProperty Name="USER_NEG" ColumnName="USER_NEG" />
+                <ScalarProperty Name="USER_POS" ColumnName="USER_POS" />
+                <ScalarProperty Name="USER_FIRST_NAME" ColumnName="USER_FIRST_NAME" />
+                <ScalarProperty Name="USER_PASSWORD" ColumnName="USER_PASSWORD" />
+                <ScalarProperty Name="USER_TYPE" ColumnName="USER_TYPE" />
+                <ScalarProperty Name="USER_GSM" ColumnName="USER_GSM" />
+                <ScalarProperty Name="USER_MAIL" ColumnName="USER_MAIL" />
+                <ScalarProperty Name="USER_SURNAME" ColumnName="USER_SURNAME" />
+                <ScalarProperty Name="USER_NAME" ColumnName="USER_NAME" />
+                <ScalarProperty Name="USER_DISTRICT" ColumnName="USER_DISTRICT" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SUBSCRIBER">
+            <EntityTypeMapping TypeName="SportsSideModel.SUBSCRIBER">
+              <MappingFragment StoreEntitySet="SUBSCRIBER">
+                <ScalarProperty Name="R_HISTORY" ColumnName="R_HISTORY" />
+                <ScalarProperty Name="CREATED_DATE" ColumnName="CREATED_DATE" />
+                <ScalarProperty Name="STATUS" ColumnName="STATUS" />
+                <ScalarProperty Name="S_TIME" ColumnName="S_TIME" />
+                <ScalarProperty Name="WEEK_DAY" ColumnName="WEEK_DAY" />
+                <ScalarProperty Name="FACILITY_ID" ColumnName="FACILITY_ID" />
+                <ScalarProperty Name="USER_ID" ColumnName="USER_ID" />
+                <ScalarProperty Name="SUBSCRIBER_ID" ColumnName="SUBSCRIBER_ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

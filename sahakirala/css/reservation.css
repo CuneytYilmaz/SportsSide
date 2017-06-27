@@ -1,0 +1,58 @@
+﻿body {
+}
+
+#sliderPhoto{
+    width:100%;
+    height:100%;
+}
+
+#sliderItem {
+    height:350px;
+}
+
+.slider {
+    margin-top:15px;
+    margin-left:16%;
+    width:800px;
+}
+
+#myLabel {
+    color:rgba(0, 0, 0, 0.86);
+    font-size: 100%;
+}
+
+#dateField{
+    margin-top:0px;
+}
+
+#iconCalendar{
+    padding-left:6px;
+}
+
+#lblDate{
+    padding-top:5px;
+    padding-left:60px;
+}
+
+#datePlace{
+    float:left;
+    margin-right:40px;
+}
+
+#searchPanel{
+    left:13%;
+}
+
+.btnHour{
+    margin-left:40px;
+    margin-bottom:6px;
+}
+
+.subscribeLabel {
+    text-align: left !important;
+}
+
+.dtError {
+    width:200px !important;
+    margin-right:15px !important;
+}

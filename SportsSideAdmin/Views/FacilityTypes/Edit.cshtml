@@ -1,0 +1,66 @@
+﻿@model SportsSide.DAL.FACILITY_TYPE
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div id="overlay"></div>
+<div id="frame">
+    <img id="main" src="" alt="" />
+</div>
+
+<h2>Tesis Türü Düzenle</h2>
+
+@using (Html.BeginForm("Edit", "FacilityTypes", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" }))
+{
+    @Html.HiddenFor(model => model.FT_ID);
+    @Html.HiddenFor(model => model.FT_PICTURE);
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @if (TempData["Hata"] != null)
+        {
+            <div class="alert alert-danger">
+                <strong>Hay aksi!</strong> @TempData["Hata"].ToString()
+            </div>
+        }
+
+        <div class="form-group">
+            @Html.Label("Tesis Türü Adı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.FT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Tesis türü adı giriniz" } })
+                @Html.ValidationMessageFor(model => model.FT_NAME, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Tesis Türü Fotoğrafı :", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                <img id="smallFtImage" src="@Model.FT_PICTURE" alt="" /><br />
+                @Html.CheckBox("isDelete", false)<span class="control-label">Fotoğrafı kaldır</span>
+                <input type="file" name="file" value="Gözat" class="btn btn-warning" id="imgUpload" />
+                @*@Html.EditorFor(model => model.FT_NAME, new { htmlAttributes = new { @class = "form-control", placeholder = "Tesis türü adı giriniz" } })
+                @Html.ValidationMessageFor(model => model.FT_NAME, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Kaydet" class="btn btn-success" />
+                <input type="button" value="Vazgeç" class="btn btn-primary" onclick="location.href='@Url.Action("Index", "FacilityTypes")'" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Geri Dön", "Index")
+</div>
+
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/facilityType.js"></script>
+<script src="~/js/layout.js"></script>
+<link href="~/css/style.css" rel="stylesheet" />
